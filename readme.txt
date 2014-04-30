@@ -4,7 +4,7 @@ Tags: elements, basic, gzip, admin, wp admin, admin footer, meta tags, seo
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Requires at least: 3.0
 Tested up to: 3.9
-Stable tag: 2.0
+Stable tag: 2.1
 License: GPLv2
 
 WP Basic Elements is a WordPress plugin that simplifys your WP Admin and makes it cleaner.
@@ -27,6 +27,9 @@ No questions
 1. http://www.wknet.se/wp-content/uploads/wpb-elements-1000x576.jpg
 
 == Changelog ==
+2014.04.30 	- version 2.1
+ * Update		- Small update to interface
+
 2014.04.30 	- version 2.0
  * Update		- New interface
  * New		- Uninstall file added
