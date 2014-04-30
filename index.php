@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.com/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.1
+* Version: 2.1.2
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -38,6 +38,8 @@ remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);		//
 remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);				// The short WordPress link
 */
 
+define('WBE_VERSION', '2.1.2');
+
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 add_action('admin_menu', 'wpb_elements');
@@ -70,15 +72,17 @@ function wpb_settings_page() {
         <?php settings_fields('wpb-settings-group'); ?>
         <?php do_settings_sections('baw-settings-group'); ?>
         <div id="welcome-panel" class="welcome-panel">
-            <label style="position:absolute;top:5px;right:10px;padding:20px 15px 0 3px;font-size:13px;text-decoration:none;line-height:1;">Version 2.1.1</label>
+            <label style="position:absolute;top:5px;right:10px;padding:20px 15px 0 3px;font-size:13px;text-decoration:none;line-height:1;">
+            	<?php _e('Version','wpbe'); ?> <?php echo WBE_VERSION; ?>
+            </label>
             <div class="welcome-panel-content">
                 <h1><?php _e('WP Basic Elements','wpbe'); ?></h1>
                 <p class="about-description"><?php _e('Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. With WP Basic Elements you can disable unnecessary features and speed up your site. Make the WP Admin simple and clean. You can activate gzip compression, change admin footers in backend, activate shortcodes in widgets, remove admin toolbar options, remove wp-generator meta tag, remove other meta tags that are not necessary etc.','wpbe'); ?></p>
                 <div class="welcome-panel-column-container">
                     <div class="welcome-panel-column">
                         <h4><?php _e('Get Started','wpbe'); ?></h4>
-                        <p>Follow me on Twitter to keep up with the latest updates.</p>
-                        <p>Donate to support open source.</p>
+                        <p><?php _e('Follow me on Twitter to keep up with the latest updates.','wpbe'); ?></p>
+                        <p><?php _e('Donate to support open source.','wpbe'); ?></p>
                         <a class="button button-secondary button-hero load-customize" href="https://twitter.com/damircalusic/" target="_blank">
                            <?php _e('TWITTER','wpbe'); ?>
                         </a>
@@ -88,27 +92,27 @@ function wpb_settings_page() {
                         <h4><?php _e('WP Optimisation','wpbe'); ?></h4>
                         <ul>
                             <li>
-                                 <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Remove Post, Comment and Category feeds','wpbe'); ?>
-                                    <input type="checkbox" name="wprss" value="1" <?php echo checked(1, get_option('wprss'), false); ?> style="float:right;margin-top:1px;" />
+                                <label>
+                                    <input type="checkbox" name="wprss" value="1" <?php echo checked(1, get_option('wprss'), false); ?> />
+									<?php _e('Remove Post, Comment and Category feeds','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
-                                 <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Remove EditURI link','wpbe'); ?>
-                                    <input type="checkbox" name="rsd" value="1" <?php echo checked(1, get_option('rsd'), false); ?> style="float:right;margin-top:1px;" />
+                                <label>
+                                    <input type="checkbox" name="rsd" value="1" <?php echo checked(1, get_option('rsd'), false); ?> />
+									<?php _e('Remove EditURI link','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
-                                 <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Remove Windows Live Writer manifest file','wpbe'); ?>
-                                    <input type="checkbox" name="wlw" value="1" <?php echo checked(1, get_option('wlw'), false); ?> style="float:right;margin-top:1px;" />
+                                <label>
+                                    <input type="checkbox" name="wlw" value="1" <?php echo checked(1, get_option('wlw'), false); ?> />
+									<?php _e('Remove Windows Live Writer manifest file','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
-                                 <label class="welcome-icon dashicons-minus">
+                            	<label>
+                              		<input type="checkbox" name="gen" value="1" <?php echo checked(1, get_option('gen'), false); ?> />
                                     <?php _e('Remove WordPress generator tag','wpbe'); ?>
-                                    <input type="checkbox" name="gen" value="1" <?php echo checked(1, get_option('gen'), false); ?> style="float:right;margin-top:1px;" />
                                 </label>
                             </li>
                         </ul>
@@ -117,69 +121,69 @@ function wpb_settings_page() {
                         <h4><?php _e('WP Admin Toolbar','wpbe'); ?></h4>
                         <ul>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Remove WP Logo','wpbe'); ?>
-                                    <input type="checkbox" name="wplogo" value="1" <?php echo checked(1, get_option('wplogo'), false); ?> style="float:right;margin-top:1px;" />
+                            	<label>
+                                    <input type="checkbox" name="wplogo" value="1" <?php echo checked(1, get_option('wplogo'), false); ?> />
+									<?php _e('Remove WP Logo','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Remove WP Updates','wpbe'); ?>
-                                    <input type="checkbox" name="wpupdates" value="1" <?php echo checked(1, get_option('wpupdates'), false); ?> style="float:right;margin-top:1px;" />
+                                <label>
+                                    <input type="checkbox" name="wpupdates" value="1" <?php echo checked(1, get_option('wpupdates'), false); ?> />
+									<?php _e('Remove WP Updates','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
+                                <label>
+                                	<input type="checkbox" name="wpcomments" value="1" <?php echo checked(1, get_option('wpcomments'), false); ?> />
                                     <?php _e('Remove WP Comments','wpbe'); ?>
-                                    <input type="checkbox" name="wpcomments" value="1" <?php echo checked(1, get_option('wpcomments'), false); ?> style="float:right;margin-top:1px;" />
                                 </label>
                             </li>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Remove WP Search','wpbe'); ?>
-                                    <input type="checkbox" name="wpsearch" value="1" <?php echo checked(1, get_option('wpsearch'), false); ?> style="float:right;margin-top:1px;" />
+                                <label>
+                                    <input type="checkbox" name="wpsearch" value="1" <?php echo checked(1, get_option('wpsearch'), false); ?> />
+									<?php _e('Remove WP Search','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
+                                <label>
+                                	<input type="checkbox" name="wp3tc" value="1" <?php echo checked(1, get_option('wp3tc'), false); ?> />
                                     <?php _e('Remove W3 Total Cache','wpbe'); ?>
-                                    <input type="checkbox" name="wp3tc" value="1" <?php echo checked(1, get_option('wp3tc'), false); ?> style="float:right;margin-top:1px;" />
                                 </label>
                             </li>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
+                                <label>
+                                	<input type="checkbox" name="a1s" value="1" <?php echo checked(1, get_option('a1s'), false); ?> />
                                     <?php _e('Remove All in One Seo','wpbe'); ?>
-                                    <input type="checkbox" name="a1s" value="1" <?php echo checked(1, get_option('a1s'), false); ?> style="float:right;margin-top:1px;" />
                                 </label>
                             </li> 
                         </ul>
-                        <h4>WP Core</h4>
+                        <h4><?php _e('WP Core','wpbe'); ?></h4>
                         <ul>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Enable GZIP compression','wpbe'); ?>
-                                    <input type="checkbox" name="gzip" value="1" <?php echo checked(1, get_option('gzip'), false); ?> style="float:right;margin-top:1px;" />
+                                <label>
+                                    <input type="checkbox" name="gzip" value="1" <?php echo checked(1, get_option('gzip'), false); ?> />
+									<?php _e('Enable GZIP compression','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
-                                    <?php _e('Enable Shortcode in widgets','wpbe'); ?>
-                                    <input type="checkbox" name="shortcode" value="1" <?php echo checked(1, get_option('shortcode'), false); ?> style="float:right;margin-top:1px;" />
+                                <label>
+                                    <input type="checkbox" name="shortcode" value="1" <?php echo checked(1, get_option('shortcode'), false); ?> />
+									<?php _e('Enable Shortcode in widgets','wpbe'); ?>
                                 </label>
                             </li>
                         </ul>
                     </div>
                     <div class="welcome-panel-column welcome-panel-last">
-                        <h4>WP Admin Footer</h4>
+                        <h4><?php _e('WP Admin Footer','wpbe'); ?></h4>
                         <ul>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
+                                <label style="display:block;margin-bottom:5px;">
                                     <?php _e('Text Left (HTML allowed)','wpbe'); ?>
                                 </label>
                                 <textarea type="text" name="footerleft" style="width:100%;height:100px;"><?php echo get_option('footerleft'); ?></textarea>
                             </li>
                             <li>
-                                <label class="welcome-icon dashicons-minus">
+                                <label style="display:block;margin-bottom:5px;">
                                     <?php _e('Text Right (HTML allowed)','wpbe'); ?>
                                 </label>
                                 <textarea type="text" name="footerright" style="width:100%;height:100px;"><?php echo get_option('footerright'); ?></textarea>
