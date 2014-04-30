@@ -3,10 +3,11 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.com/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1
+* Version: 2.1.1
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
+* License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */ 
 
 /*  Copyright 2014  Damir Calusic (email : damir@damircalusic.com)
@@ -69,7 +70,7 @@ function wpb_settings_page() {
         <?php settings_fields('wpb-settings-group'); ?>
         <?php do_settings_sections('baw-settings-group'); ?>
         <div id="welcome-panel" class="welcome-panel">
-            <label style="position:absolute;top:5px;right:10px;padding:20px 15px 0 3px;font-size:13px;text-decoration:none;line-height:1;">Version 2.1</label>
+            <label style="position:absolute;top:5px;right:10px;padding:20px 15px 0 3px;font-size:13px;text-decoration:none;line-height:1;">Version 2.1.1</label>
             <div class="welcome-panel-content">
                 <h1><?php _e('WP Basic Elements','wpbe'); ?></h1>
                 <p class="about-description"><?php _e('Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. With WP Basic Elements you can disable unnecessary features and speed up your site. Make the WP Admin simple and clean. You can activate gzip compression, change admin footers in backend, activate shortcodes in widgets, remove admin toolbar options, remove wp-generator meta tag, remove other meta tags that are not necessary etc.','wpbe'); ?></p>
