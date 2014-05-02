@@ -1,5 +1,5 @@
 === WP Basic Elements ===
-Contributors: webkreativ
+Contributors: WebKreativ
 Tags: optimisation, elements, basic, gzip, compress, admin, wp admin, admin footer, meta tags, seo, simple
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Requires at least: 3.0
