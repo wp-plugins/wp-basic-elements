@@ -25,7 +25,7 @@ Follow me on Twitter to keep up with the latest updates [Damir Calusic](https://
 4. Click through the alternatives and enjoy!
 
 == Frequently Asked Questions ==
-Use the forum to if you have any qustions.
+Use the `support` link in the menu above if you have any qustions.
 
 == Screenshots ==
 1. http://www.wknet.se/wp-content/uploads/wpb-elements-1000x576.jpg
