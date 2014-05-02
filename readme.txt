@@ -1,16 +1,20 @@
 === WP Basic Elements ===
 Contributors: webkreativ
-Tags: elements, basic, gzip, admin, wp admin, admin footer, meta tags, seo
+Tags: optimisation, elements, basic, gzip, compress, admin, wp admin, admin footer, meta tags, seo, simple
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Requires at least: 3.0
 Tested up to: 3.9
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 License: GPLv2
 
-WP Basic Elements is a WordPress plugin that simplifys your WP Admin and makes it cleaner.
+WP Basic Elements is a WordPress plugin that simplifys your WP Admin and cleans your markup in code for faster loadtime.
 
 == Description ==
-With WP Basic Elements you can disable unnecessary features and speed up your site. Make the WP Admin simple and clean. You can activate gzip compression, change admin footers in backend, activate shortcodes in widgets, remove admin toolbar options, remove wp-generator meta tag, remove other meta tags that are not necessary etc.
+With WP Basic Elements you can disable unnecessary features and speed up your site. Make the WP Admin simple and clean. 
+
+You can activate gzip compression, change admin footers in backend, activate shortcodes in widgets, remove admin toolbar options and you can clean the code markup from unnecessary code snippets like WordPress generator meta tag and a bunch of other non important code snippets in the code.
+
+Cleaning the code markup will speed up your sites loadtime and increase the overall performance.
 
 Follow me on Twitter to keep up with the latest updates [Damir Calusic](https://twitter.com/damircalusic/)
 
@@ -21,12 +25,19 @@ Follow me on Twitter to keep up with the latest updates [Damir Calusic](https://
 4. Click through the alternatives and enjoy!
 
 == Frequently Asked Questions ==
-No questions
+Use the forum to if you have any qustions.
 
 == Screenshots ==
 1. http://www.wknet.se/wp-content/uploads/wpb-elements-1000x576.jpg
 
 == Changelog ==
+= 2.1.3 =
+* Updated tags
+* Updated information
+* FAQ section updated
+* New WP Optimisation tools added
+* Information button added
+
 = 2.1.2 =
 * Better version control in code
 * Removed unused code snippets

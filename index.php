@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.com/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.2
+* Version: 2.1.3
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -26,19 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-/* 
-
-// REMOVE ACTIONS
-remove_action('wp_head', 'index_rel_link'); 							// Index link
-remove_action('wp_head', 'parent_post_rel_link', 10, 0); 				// Prev link
-remove_action('wp_head', 'start_post_rel_link', 10, 0); 				// Start link
-remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0); 			// Display relational links for the posts adjacent to the current post.
-remove_action('wp_head', 'start_post_rel_link', 10, 0);					//
-remove_action('wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0);		//
-remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0);				// The short WordPress link
-*/
-
-define('WBE_VERSION', '2.1.2');
+define('WBE_VERSION', '2.1.3');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -55,6 +43,11 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'rsd');
 	register_setting('wpb-settings-group', 'wlw');
 	register_setting('wpb-settings-group', 'gen');
+	register_setting('wpb-settings-group', 'irelink');
+	register_setting('wpb-settings-group', 'prevlink');
+	register_setting('wpb-settings-group', 'startlink');
+	register_setting('wpb-settings-group', 'adjlinks');
+	register_setting('wpb-settings-group', 'shortlink');
 	register_setting('wpb-settings-group', 'shortcode');
 	register_setting('wpb-settings-group', 'wplogo');
 	register_setting('wpb-settings-group', 'wpupdates');
@@ -77,7 +70,7 @@ function wpb_settings_page() {
             </label>
             <div class="welcome-panel-content">
                 <h1><?php _e('WP Basic Elements','wpbe'); ?></h1>
-                <p class="about-description"><?php _e('Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. With WP Basic Elements you can disable unnecessary features and speed up your site. Make the WP Admin simple and clean. You can activate gzip compression, change admin footers in backend, activate shortcodes in widgets, remove admin toolbar options, remove wp-generator meta tag, remove other meta tags that are not necessary etc.','wpbe'); ?></p>
+                <p class="about-description"><?php _e('With WP Basic Elements you can disable unnecessary features and speed up your site. Make the WP Admin simple and clean. You can activate gzip compression, change admin footers in backend, activate shortcodes in widgets, remove admin toolbar options and you can clean the code markup from unnecessary code snippets like WordPress generator meta tag and a bunch of other non important code snippets in the code. Cleaning the code markup will speed up your sites loadtime and increase the overall performance.','wpbe'); ?></p>
                 <div class="welcome-panel-column-container">
                     <div class="welcome-panel-column">
                         <h4><?php _e('Get Started','wpbe'); ?></h4>
@@ -106,13 +99,43 @@ function wpb_settings_page() {
                             <li>
                                 <label>
                                     <input type="checkbox" name="wlw" value="1" <?php echo checked(1, get_option('wlw'), false); ?> />
-									<?php _e('Remove Windows Live Writer manifest file','wpbe'); ?>
+									<?php _e('Remove Windows Live Writer Manifest File','wpbe'); ?>
                                 </label>
                             </li>
                             <li>
                             	<label>
                               		<input type="checkbox" name="gen" value="1" <?php echo checked(1, get_option('gen'), false); ?> />
-                                    <?php _e('Remove WordPress generator tag','wpbe'); ?>
+                                    <?php _e('Remove WordPress Generator Meta Tag','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                            	<label>
+                              		<input type="checkbox" name="irelink" value="1" <?php echo checked(1, get_option('irelink'), false); ?> />
+                                    <?php _e('Remove Index link','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                            	<label>
+                              		<input type="checkbox" name="prevlink" value="1" <?php echo checked(1, get_option('prevlink'), false); ?> />
+                                    <?php _e('Remove Prev link','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                            	<label>
+                              		<input type="checkbox" name="startlink" value="1" <?php echo checked(1, get_option('startlink'), false); ?> />
+                                    <?php _e('Remove Start link','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                            	<label>
+                              		<input type="checkbox" name="adjlinks" value="1" <?php echo checked(1, get_option('adjlinks'), false); ?> />
+                                    <?php _e('Remove Relational links for the Posts','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                            	<label>
+                              		<input type="checkbox" name="shortlink" value="1" <?php echo checked(1, get_option('shortlink'), false); ?> />
+                                    <?php _e('Remove WordPress Shortlink','wpbe'); ?>
                                 </label>
                             </li>
                         </ul>
@@ -189,7 +212,11 @@ function wpb_settings_page() {
                                 <textarea type="text" name="footerright" style="width:100%;height:100px;"><?php echo get_option('footerright'); ?></textarea>
                             </li>
                         </ul>
-                        <?php submit_button(); ?>
+                        <?php //submit_button(); ?>
+                        <p class="submit">
+                        	<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes','wpbe'); ?>">
+                            <a href="http://www.wknet.se/wp-basic-elements/" class="button button-secondary" target="_blank"><?php _e('Information','wpbe'); ?></a>
+                       	</p>
                     </div>
                 </div>
             </div>
@@ -254,6 +281,21 @@ if(get_option('wlw') == '1'){ remove_action('wp_head', 'wlwmanifest_link'); }
 
 // Remove WordPress generator tag
 if(get_option('gen') == '1'){ remove_action('wp_head', 'wp_generator'); }
+
+// Remove Index link
+if(get_option('irelink') == '1'){ remove_action('wp_head', 'index_rel_link'); }
+
+// Remove Prev link
+if(get_option('prevlink') == '1'){ remove_action('wp_head', 'parent_post_rel_link', 10, 0); }
+
+// Remove Start link
+if(get_option('startlink') == '1'){ remove_action('wp_head', 'start_post_rel_link', 10, 0); }
+
+// Remove relational links for the Posts
+if(get_option('adjlinks') == '1'){ remove_action('wp_head', 'adjacent_posts_rel_link', 10, 0); }
+
+// Remove WordPress Shortlink
+if(get_option('shortlink') == '1'){ remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0); }
 
 // Add Shortcode ability to widgets
 if(get_option('shortcode') == '1'){ add_filter('widget_text', 'do_shortcode'); } 
