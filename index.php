@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.com/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.3
+* Version: 2.1.4
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -26,7 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '2.1.3');
+define('WBE_VERSION', '2.1.4');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -48,6 +48,8 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'startlink');
 	register_setting('wpb-settings-group', 'adjlinks');
 	register_setting('wpb-settings-group', 'shortlink');
+	register_setting('wpb-settings-group', 'pings');
+	register_setting('wpb-settings-group', 'canonical');
 	register_setting('wpb-settings-group', 'shortcode');
 	register_setting('wpb-settings-group', 'wplogo');
 	register_setting('wpb-settings-group', 'wpupdates');
@@ -55,6 +57,7 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'wpcomments');
 	register_setting('wpb-settings-group', 'wp3tc');
 	register_setting('wpb-settings-group', 'a1s');
+	register_setting('wpb-settings-group', 'wpzoom');
 	register_setting('wpb-settings-group', 'footerleft');
 	register_setting('wpb-settings-group', 'footerright');
 }
@@ -138,6 +141,18 @@ function wpb_settings_page() {
                                     <?php _e('Remove WordPress Shortlink','wpbe'); ?>
                                 </label>
                             </li>
+                            <li>
+                            	<label>
+                              		<input type="checkbox" name="pings" value="1" <?php echo checked(1, get_option('pings'), false); ?> />
+                                    <?php _e('Remove WordPress Pingbacks','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                            	<label>
+                              		<input type="checkbox" name="canonical" value="1" <?php echo checked(1, get_option('canonical'), false); ?> />
+                                    <?php _e('Remove Canonical link','wpbe'); ?>
+                                </label>
+                            </li>
                         </ul>
                     </div>
                     <div class="welcome-panel-column">
@@ -167,6 +182,9 @@ function wpb_settings_page() {
 									<?php _e('Remove WP Search','wpbe'); ?>
                                 </label>
                             </li>
+               			</ul>
+                        <p><strong><?php _e('Plugins','wpbe'); ?></strong></p>
+                        <ul>    
                             <li>
                                 <label>
                                 	<input type="checkbox" name="wp3tc" value="1" <?php echo checked(1, get_option('wp3tc'), false); ?> />
@@ -177,6 +195,12 @@ function wpb_settings_page() {
                                 <label>
                                 	<input type="checkbox" name="a1s" value="1" <?php echo checked(1, get_option('a1s'), false); ?> />
                                     <?php _e('Remove All in One Seo','wpbe'); ?>
+                                </label>
+                            </li> 
+                            <li>
+                                <label>
+                                	<input type="checkbox" name="wpzoom" value="1" <?php echo checked(1, get_option('wpzoom'), false); ?> />
+                                    <?php _e('Remove WP Zoom Framework','wpbe'); ?>
                                 </label>
                             </li> 
                         </ul>
@@ -259,6 +283,16 @@ function remove_a1s() {
     $wp_admin_bar->remove_menu('all-in-one-seo-pack'); 
 }
 
+function remove_wpzoom() {
+	global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('wpzoom'); 
+}
+
+function remove_pings($headers) {
+	unset($headers['X-Pingback']);
+	return $headers;
+}
+
 function admin_footer_left() { 
      echo get_option('footerleft'); 
 }
@@ -297,6 +331,12 @@ if(get_option('adjlinks') == '1'){ remove_action('wp_head', 'adjacent_posts_rel_
 // Remove WordPress Shortlink
 if(get_option('shortlink') == '1'){ remove_action('wp_head', 'wp_shortlink_wp_head', 10, 0); }
 
+// Remove Pings from header
+if(get_option('pings') == '1'){ add_filter('wp_headers', 'remove_pings'); }
+
+// Remove Canonical link
+if(get_option('canonical') == '1'){ remove_action('wp_head', 'rel_canonical'); }
+
 // Add Shortcode ability to widgets
 if(get_option('shortcode') == '1'){ add_filter('widget_text', 'do_shortcode'); } 
 
@@ -317,6 +357,9 @@ if(get_option('wp3tc') == '1'){ add_action('wp_before_admin_bar_render', 'remove
 
 // Remove All in One Seo Pack in toolbar
 if(get_option('a1s') == '1'){ add_action('wp_before_admin_bar_render', 'remove_a1s'); }
+
+// Remove WP Zoom Framework in toolbar
+if(get_option('wpzoom') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpzoom'); }
 
 // Add custom text the admin footer left
 if(get_option('footerleft') != ''){ add_filter('admin_footer_text', 'admin_footer_left'); } 
