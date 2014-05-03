@@ -3,14 +3,14 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.com/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.5
+* Version: 2.1.6
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */ 
 
-/*  Copyright 2014  Damir Calusic (email : damir@damircalusic.com)
+/*  Copyright (C) 2014  Damir Calusic (email : damir@damircalusic.com)
 	
 	This program is free software; you can redistribute it and/or modify
 	it under the terms of the GNU General Public License, version 2, as 
@@ -26,7 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '2.1.5');
+define('WBE_VERSION', '2.1.6');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -59,6 +59,11 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'a1s');
 	register_setting('wpb-settings-group', 'yseo');
 	register_setting('wpb-settings-group', 'wpzoom');
+	register_setting('wpb-settings-group', 'colorsch');
+	register_setting('wpb-settings-group', 'haim');
+	register_setting('wpb-settings-group', 'hyim');
+	register_setting('wpb-settings-group', 'hjabber');
+	register_setting('wpb-settings-group', 'hgplus');
 	register_setting('wpb-settings-group', 'footerleft');
 	register_setting('wpb-settings-group', 'footerright');
 }
@@ -211,6 +216,39 @@ function wpb_settings_page() {
                                 </label>
                             </li> 
                         </ul>
+                         <h4><?php _e('WP Users','wpbe'); ?></h4>
+                        <ul>
+                        	<li>
+                                <label>
+                                    <input type="checkbox" name="colorsch" value="1" <?php echo checked(1, get_option('colorsch'), false); ?> />
+									<?php _e('Disable Color Scheme selector for users','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="haim" value="1" <?php echo checked(1, get_option('haim'), false); ?> />
+									<?php _e('Disable AIM field from users contact field','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="hjabber" value="1" <?php echo checked(1, get_option('hjabber'), false); ?> />
+									<?php _e('Disable Jabber field from users contact field','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="hyim" value="1" <?php echo checked(1, get_option('hyim'), false); ?> />
+									<?php _e('Disable Yahoo IM field from users contact field','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                    <input type="checkbox" name="hgplus" value="1" <?php echo checked(1, get_option('hgplus'), false); ?> />
+									<?php _e('Disable Google Plus field from users contact field','wpbe'); ?>
+                                </label>
+                            </li>
+                        </ul>
                         <h4><?php _e('WP Core','wpbe'); ?></h4>
                         <ul>
                             <li>
@@ -305,6 +343,26 @@ function remove_pings($headers) {
 	return $headers;
 }
 
+function hide_aim($contactmethods) {
+	unset($contactmethods['aim']);
+	return $contactmethods;
+}
+
+function hide_jabber($contactmethods) {
+	unset($contactmethods['jabber']);
+	return $contactmethods;
+}
+
+function hide_yim($contactmethods) {
+	unset($contactmethods['yim']);
+	return $contactmethods;
+}
+
+function hide_gplus($contactmethods) {
+	unset($contactmethods['googleplus']);
+	return $contactmethods;
+}
+
 function admin_footer_left() { 
      echo get_option('footerleft'); 
 }
@@ -375,6 +433,21 @@ if(get_option('yseo') == '1'){ add_action('wp_before_admin_bar_render', 'remove_
 
 // Remove WP Zoom Framework in toolbar
 if(get_option('wpzoom') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpzoom'); }
+
+// Remove Website URL from Users contact info
+if(get_option('colorsch') == '1'){ remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker'); }
+
+// Remove AIM from Users contact info
+if(get_option('haim') == '1'){ add_filter('user_contactmethods', 'hide_aim', 999, 1); }
+
+// Remove Jabber from Users contact info
+if(get_option('hjabber') == '1'){ add_filter('user_contactmethods', 'hide_jabber', 999, 1); }
+
+// Remove Yahoo IM from Users contact info
+if(get_option('hyim') == '1'){ add_filter('user_contactmethods', 'hide_yim', 999, 1); }
+
+// Remove Google Plus from Users contact info
+if(get_option('hgplus') == '1'){ add_filter('user_contactmethods', 'hide_gplus', 999, 1); }
 
 // Add custom text the admin footer left
 if(get_option('footerleft') != ''){ add_filter('admin_footer_text', 'admin_footer_left'); } 
