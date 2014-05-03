@@ -1,0 +1,103 @@
+# Copyright (C) 2014 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-basic-elements\n"
+"POT-Creation-Date: 2014-04-30 20:13:14+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: index.php:74
+msgid "WP Basic Elements"
+msgstr ""
+
+#: index.php:75
+msgid ""
+"Disable unnecessary features and speed up your site. Make the WP Admin "
+"simple and clean. With WP Basic Elements you can disable unnecessary "
+"features and speed up your site. Make the WP Admin simple and clean. You can "
+"activate gzip compression, change admin footers in backend, activate "
+"shortcodes in widgets, remove admin toolbar options, remove wp-generator "
+"meta tag, remove other meta tags that are not necessary etc."
+msgstr ""
+
+#: index.php:78
+msgid "Get Started"
+msgstr ""
+
+#: index.php:82
+msgid "TWITTER"
+msgstr ""
+
+#: index.php:85
+msgid "DONATE"
+msgstr ""
+
+#: index.php:87
+msgid "WP Optimisation"
+msgstr ""
+
+#: index.php:91
+msgid "Remove Post, Comment and Category feeds"
+msgstr ""
+
+#: index.php:97
+msgid "Remove EditURI link"
+msgstr ""
+
+#: index.php:103
+msgid "Remove Windows Live Writer manifest file"
+msgstr ""
+
+#: index.php:109
+msgid "Remove WordPress generator tag"
+msgstr ""
+
+#: index.php:116
+msgid "WP Admin Toolbar"
+msgstr ""
+
+#: index.php:120
+msgid "Remove WP Logo"
+msgstr ""
+
+#: index.php:126
+msgid "Remove WP Updates"
+msgstr ""
+
+#: index.php:132
+msgid "Remove WP Comments"
+msgstr ""
+
+#: index.php:138
+msgid "Remove WP Search"
+msgstr ""
+
+#: index.php:144
+msgid "Remove W3 Total Cache"
+msgstr ""
+
+#: index.php:150
+msgid "Remove All in One Seo"
+msgstr ""
+
+#: index.php:159
+msgid "Enable GZIP compression"
+msgstr ""
+
+#: index.php:165
+msgid "Enable Shortcode in widgets"
+msgstr ""
+
+#: index.php:176
+msgid "Text Left (HTML allowed)"
+msgstr ""
+
+#: index.php:182
+msgid "Text Right (HTML allowed)"
+msgstr ""
