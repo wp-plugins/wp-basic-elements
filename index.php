@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.com/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.4
+* Version: 2.1.5
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -26,7 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '2.1.4');
+define('WBE_VERSION', '2.1.5');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -57,6 +57,7 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'wpcomments');
 	register_setting('wpb-settings-group', 'wp3tc');
 	register_setting('wpb-settings-group', 'a1s');
+	register_setting('wpb-settings-group', 'yseo');
 	register_setting('wpb-settings-group', 'wpzoom');
 	register_setting('wpb-settings-group', 'footerleft');
 	register_setting('wpb-settings-group', 'footerright');
@@ -199,6 +200,12 @@ function wpb_settings_page() {
                             </li> 
                             <li>
                                 <label>
+                                	<input type="checkbox" name="yseo" value="1" <?php echo checked(1, get_option('yseo'), false); ?> />
+                                    <?php _e('Remove Yoast SEO','wpbe'); ?>
+                                </label>
+                            </li> 
+                            <li>
+                                <label>
                                 	<input type="checkbox" name="wpzoom" value="1" <?php echo checked(1, get_option('wpzoom'), false); ?> />
                                     <?php _e('Remove WP Zoom Framework','wpbe'); ?>
                                 </label>
@@ -283,6 +290,11 @@ function remove_a1s() {
     $wp_admin_bar->remove_menu('all-in-one-seo-pack'); 
 }
 
+function remove_yseo() {
+	global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('wpseo-menu'); 
+}
+
 function remove_wpzoom() {
 	global $wp_admin_bar;
     $wp_admin_bar->remove_menu('wpzoom'); 
@@ -357,6 +369,9 @@ if(get_option('wp3tc') == '1'){ add_action('wp_before_admin_bar_render', 'remove
 
 // Remove All in One Seo Pack in toolbar
 if(get_option('a1s') == '1'){ add_action('wp_before_admin_bar_render', 'remove_a1s'); }
+
+// Remove Yoast SEO in toolbar
+if(get_option('yseo') == '1'){ add_action('wp_before_admin_bar_render', 'remove_yseo'); }
 
 // Remove WP Zoom Framework in toolbar
 if(get_option('wpzoom') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpzoom'); }
