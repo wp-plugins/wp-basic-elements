@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.se/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.7
+* Version: 2.1.8
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -26,15 +26,15 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '2.1.7');
+define('WBE_VERSION', '2.1.8');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 add_action('admin_menu', 'wpb_elements');
 
 function wpb_elements() {
-	add_menu_page('WPB Elements', 'WPB Elements', 'administrator', __FILE__, 'wpb_settings_page', 'dashicons-awards', 3);
 	add_action('admin_init', 'register_wpb_settings');
+	add_submenu_page('options-general.php', 'WPB Elements', 'WPB Elements', 'manage_options', 'wpb_settings_page', 'wpb_settings_page');
 }
 
 function register_wpb_settings() {
@@ -50,6 +50,7 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'shortlink');
 	register_setting('wpb-settings-group', 'pings');
 	register_setting('wpb-settings-group', 'canonical');
+	register_setting('wpb-settings-group', 'wpbemenu');
 	register_setting('wpb-settings-group', 'shortcode');
 	register_setting('wpb-settings-group', 'wplogo');
 	register_setting('wpb-settings-group', 'wpupdates');
@@ -251,6 +252,12 @@ function wpb_settings_page() {
                         </ul>
                         <h4><?php _e('WP Core','wpbe'); ?></h4>
                         <ul>
+                        	<li>
+                                <label>
+                                    <input type="checkbox" name="wpbemenu" value="1" <?php echo checked(1, get_option('wpbemenu'), false); ?> />
+									<?php _e('Add shortcut for WPB Elements in sidebar menu','wpbe'); ?>
+                                </label>
+                            </li>
                             <li>
                                 <label>
                                     <input type="checkbox" name="gzip" value="1" <?php echo checked(1, get_option('gzip'), false); ?> />
@@ -296,6 +303,10 @@ function wpb_settings_page() {
 
 function gzip(){ 
     ob_start('ob_gzhandler');
+}
+
+function wpb_shortcut(){ 
+	add_menu_page('WPB Elements', 'WPB Elements', 'manage_options', __FILE__, 'wpb_settings_page', 'dashicons-awards', 3);
 }
 
 function remove_wplogo() {   
@@ -406,6 +417,9 @@ if(get_option('pings') == '1'){ add_filter('wp_headers', 'remove_pings'); }
 
 // Remove Canonical link
 if(get_option('canonical') == '1'){ remove_action('wp_head', 'rel_canonical'); }
+
+// Add WPB Elements in main admin menu
+if(get_option('wpbemenu') == '1'){ add_action('admin_menu', 'wpb_shortcut'); }
 
 // Add Shortcode ability to widgets
 if(get_option('shortcode') == '1'){ add_filter('widget_text', 'do_shortcode'); } 
