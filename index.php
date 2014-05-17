@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.se/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.8
+* Version: 2.1.9
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -26,7 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '2.1.8');
+define('WBE_VERSION', '2.1.9');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -60,6 +60,7 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'a1s');
 	register_setting('wpb-settings-group', 'yseo');
 	register_setting('wpb-settings-group', 'wpzoom');
+	register_setting('wpb-settings-group', 'vfb');
 	register_setting('wpb-settings-group', 'colorsch');
 	register_setting('wpb-settings-group', 'haim');
 	register_setting('wpb-settings-group', 'hyim');
@@ -67,6 +68,8 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'hgplus');
 	register_setting('wpb-settings-group', 'footerleft');
 	register_setting('wpb-settings-group', 'footerright');
+	register_setting('wpb-settings-group', 'mailname');
+	register_setting('wpb-settings-group', 'mailadress');
 }
 
 function wpb_settings_page() {
@@ -190,7 +193,7 @@ function wpb_settings_page() {
                                 </label>
                             </li>
                			</ul>
-                        <p><strong><?php _e('Plugins','wpbe'); ?></strong></p>
+                        <p><strong><?php _e('Plugins (if used)','wpbe'); ?></strong></p>
                         <ul>    
                             <li>
                                 <label>
@@ -214,6 +217,12 @@ function wpb_settings_page() {
                                 <label>
                                 	<input type="checkbox" name="wpzoom" value="1" <?php echo checked(1, get_option('wpzoom'), false); ?> />
                                     <?php _e('Remove WP Zoom Framework','wpbe'); ?>
+                                </label>
+                            </li>
+                            <li>
+                                <label>
+                                	<input type="checkbox" name="vfb" value="1" <?php echo checked(1, get_option('vfb'), false); ?> />
+                                    <?php _e('Remove Visual Form Builder','wpbe'); ?>
                                 </label>
                             </li> 
                         </ul>
@@ -288,7 +297,21 @@ function wpb_settings_page() {
                                 <textarea type="text" name="footerright" style="width:100%;height:100px;"><?php echo get_option('footerright'); ?></textarea>
                             </li>
                         </ul>
-                        <?php //submit_button(); ?>
+                        <h4><?php _e('WP Mail','wpbe'); ?></h4>
+                        <ul>
+                            <li>
+                                <label style="display:block;margin-bottom:5px;">
+                                    <?php _e('Change mail name <strong>(WordPress)</strong> sent to users to your own','wpbe'); ?>
+                                </label>
+                                <input type="text" name="mailname" style="width:100%;" value="<?php echo get_option('mailname'); ?>" placeholder="<?php _e('Example:','wpbe');?> <?php echo get_bloginfo('name'); ?>" />
+                            </li>
+                            <li>
+                                <label style="display:block;margin-bottom:5px;">
+                                    <?php _e('Change mail adress <strong>(wordpress@mysite.com)</strong> sent to users to your own','wpbe'); ?>
+                                </label>
+                                <input type="text" name="mailadress" style="width:100%;" value="<?php echo get_option('mailadress'); ?>" placeholder="<?php _e('Example:','wpbe');?> <?php echo get_bloginfo('admin_email'); ?>" />
+                            </li>
+                        </ul>
                         <p class="submit">
                         	<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes','wpbe'); ?>">
                             <a href="http://www.wknet.se/wp-basic-elements/" class="button button-secondary" target="_blank"><?php _e('Information','wpbe'); ?></a>
@@ -349,6 +372,11 @@ function remove_wpzoom() {
     $wp_admin_bar->remove_menu('wpzoom'); 
 }
 
+function remove_vfb() {
+	global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('vfb_admin_toolbar'); 
+}
+
 function remove_pings($headers) {
 	unset($headers['X-Pingback']);
 	return $headers;
@@ -380,6 +408,14 @@ function admin_footer_left() {
 
 function admin_footer_right() { 
      return get_option('footerright'); 
+}
+
+function new_mail_from($old) {
+	return get_option('mailadress');
+}
+
+function new_mail_from_name($old) {
+	return get_option('mailname');
 }
 
 // Initiate GZIP on WordPress site
@@ -448,6 +484,9 @@ if(get_option('yseo') == '1'){ add_action('wp_before_admin_bar_render', 'remove_
 // Remove WP Zoom Framework in toolbar
 if(get_option('wpzoom') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpzoom'); }
 
+// Remove Visual Form Builder in toolbar
+if(get_option('vfb') == '1'){ add_action('wp_before_admin_bar_render', 'remove_vfb'); }
+
 // Remove Website URL from Users contact info
 if(get_option('colorsch') == '1'){ remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker'); }
 
@@ -468,3 +507,9 @@ if(get_option('footerleft') != ''){ add_filter('admin_footer_text', 'admin_foote
 
 // Add custom text the admin footer right
 if(get_option('footerright') != ''){ add_filter('update_footer', 'admin_footer_right', '1234'); }
+
+// Change WordPress custom name to your own name
+if(get_option('mailname') != ''){ add_filter('wp_mail_from_name', 'new_mail_from_name'); }
+
+// Change WordPress cusotm name
+if(get_option('mailadress') != ''){ add_filter('wp_mail_from', 'new_mail_from'); }
