@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: http://www.wknet.se/wp-basic-elements/
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 2.1.9
+* Version: 3.0
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -26,15 +26,29 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '2.1.9');
+define('WBE_VERSION', '3.0');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 add_action('admin_menu', 'wpb_elements');
+add_action('admin_head', 'wpb_admin_head' );
 
 function wpb_elements() {
 	add_action('admin_init', 'register_wpb_settings');
 	add_submenu_page('options-general.php', 'WPB Elements', 'WPB Elements', 'manage_options', 'wpb_settings_page', 'wpb_settings_page');
+}
+
+function wpb_admin_head() {
+	?>
+    <style type="text/css">
+		.plugins tr#wp-basic-elements .column-description{
+			background-image:url(<?php echo plugin_dir_url( __FILE__ ) . 'images/favicon-96x96.png'; ?>);
+			background-repeat:no-repeat;
+			background-position:95% 0;
+			background-size:65px;
+		}
+    </style>
+    <?php
 }
 
 function register_wpb_settings() {
@@ -61,6 +75,7 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'yseo');
 	register_setting('wpb-settings-group', 'wpzoom');
 	register_setting('wpb-settings-group', 'vfb');
+	register_setting('wpb-settings-group', 'ngg');
 	register_setting('wpb-settings-group', 'colorsch');
 	register_setting('wpb-settings-group', 'haim');
 	register_setting('wpb-settings-group', 'hyim');
@@ -86,241 +101,342 @@ function wpb_settings_page() {
                 <p class="about-description"><?php _e('With WP Basic Elements you can disable unnecessary features and speed up your site. Make the WP Admin simple and clean. You can activate gzip compression, change admin footers in backend, activate shortcodes in widgets, remove admin toolbar options and you can clean the code markup from unnecessary code snippets like WordPress generator meta tag and a bunch of other non important code snippets in the code. Cleaning the code markup will speed up your sites loadtime and increase the overall performance.','wpbe'); ?></p>
                 <div class="welcome-panel-column-container">
                     <div class="welcome-panel-column">
-                        <h4><?php _e('Get Started','wpbe'); ?></h4>
-                        <p><?php _e('Follow me on Twitter to keep up with the latest updates.','wpbe'); ?></p>
-                        <p><?php _e('Donate to support open source.','wpbe'); ?></p>
-                        <a class="button button-secondary button-hero load-customize" href="https://twitter.com/damircalusic/" target="_blank">
-                           <?php _e('TWITTER','wpbe'); ?>
-                        </a>
-                        <a class="button button-secondary button-hero load-customize hide-if-no-customize" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">
-                           <?php _e('DONATE','wpbe'); ?>
-                        </a>
-                        <h4><?php _e('WP Optimisation','wpbe'); ?></h4>
-                        <ul>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="wprss" value="1" <?php echo checked(1, get_option('wprss'), false); ?> />
-									<?php _e('Remove Post, Comment and Category feeds','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="rsd" value="1" <?php echo checked(1, get_option('rsd'), false); ?> />
-									<?php _e('Remove EditURI link','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="wlw" value="1" <?php echo checked(1, get_option('wlw'), false); ?> />
-									<?php _e('Remove Windows Live Writer Manifest File','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="gen" value="1" <?php echo checked(1, get_option('gen'), false); ?> />
-                                    <?php _e('Remove WordPress Generator Meta Tag','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="irelink" value="1" <?php echo checked(1, get_option('irelink'), false); ?> />
-                                    <?php _e('Remove Index link','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="prevlink" value="1" <?php echo checked(1, get_option('prevlink'), false); ?> />
-                                    <?php _e('Remove Prev link','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="startlink" value="1" <?php echo checked(1, get_option('startlink'), false); ?> />
-                                    <?php _e('Remove Start link','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="adjlinks" value="1" <?php echo checked(1, get_option('adjlinks'), false); ?> />
-                                    <?php _e('Remove Relational links for the Posts','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="shortlink" value="1" <?php echo checked(1, get_option('shortlink'), false); ?> />
-                                    <?php _e('Remove WordPress Shortlink','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="pings" value="1" <?php echo checked(1, get_option('pings'), false); ?> />
-                                    <?php _e('Remove WordPress Pingbacks','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                            	<label>
-                              		<input type="checkbox" name="canonical" value="1" <?php echo checked(1, get_option('canonical'), false); ?> />
-                                    <?php _e('Remove Canonical link','wpbe'); ?>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="welcome-panel-column">
-                        <h4><?php _e('WP Admin Toolbar','wpbe'); ?></h4>
-                        <ul>
-                            <li>
-                            	<label>
-                                    <input type="checkbox" name="wplogo" value="1" <?php echo checked(1, get_option('wplogo'), false); ?> />
-									<?php _e('Remove WP Logo','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="wpupdates" value="1" <?php echo checked(1, get_option('wpupdates'), false); ?> />
-									<?php _e('Remove WP Updates','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                	<input type="checkbox" name="wpcomments" value="1" <?php echo checked(1, get_option('wpcomments'), false); ?> />
-                                    <?php _e('Remove WP Comments','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="wpsearch" value="1" <?php echo checked(1, get_option('wpsearch'), false); ?> />
-									<?php _e('Remove WP Search','wpbe'); ?>
-                                </label>
-                            </li>
-               			</ul>
-                        <p><strong><?php _e('Plugins (if used)','wpbe'); ?></strong></p>
-                        <ul>    
-                            <li>
-                                <label>
-                                	<input type="checkbox" name="wp3tc" value="1" <?php echo checked(1, get_option('wp3tc'), false); ?> />
-                                    <?php _e('Remove W3 Total Cache','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                	<input type="checkbox" name="a1s" value="1" <?php echo checked(1, get_option('a1s'), false); ?> />
-                                    <?php _e('Remove All in One Seo','wpbe'); ?>
-                                </label>
-                            </li> 
-                            <li>
-                                <label>
-                                	<input type="checkbox" name="yseo" value="1" <?php echo checked(1, get_option('yseo'), false); ?> />
-                                    <?php _e('Remove Yoast SEO','wpbe'); ?>
-                                </label>
-                            </li> 
-                            <li>
-                                <label>
-                                	<input type="checkbox" name="wpzoom" value="1" <?php echo checked(1, get_option('wpzoom'), false); ?> />
-                                    <?php _e('Remove WP Zoom Framework','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                	<input type="checkbox" name="vfb" value="1" <?php echo checked(1, get_option('vfb'), false); ?> />
-                                    <?php _e('Remove Visual Form Builder','wpbe'); ?>
-                                </label>
-                            </li> 
-                        </ul>
-                         <h4><?php _e('WP Users','wpbe'); ?></h4>
-                        <ul>
-                        	<li>
-                                <label>
-                                    <input type="checkbox" name="colorsch" value="1" <?php echo checked(1, get_option('colorsch'), false); ?> />
-									<?php _e('Disable Color Scheme selector for users','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="haim" value="1" <?php echo checked(1, get_option('haim'), false); ?> />
-									<?php _e('Disable AIM field from users contact field','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="hjabber" value="1" <?php echo checked(1, get_option('hjabber'), false); ?> />
-									<?php _e('Disable Jabber field from users contact field','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="hyim" value="1" <?php echo checked(1, get_option('hyim'), false); ?> />
-									<?php _e('Disable Yahoo IM field from users contact field','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="hgplus" value="1" <?php echo checked(1, get_option('hgplus'), false); ?> />
-									<?php _e('Disable Google Plus field from users contact field','wpbe'); ?>
-                                </label>
-                            </li>
-                        </ul>
-                        <h4><?php _e('WP Core','wpbe'); ?></h4>
-                        <ul>
-                        	<li>
-                                <label>
-                                    <input type="checkbox" name="wpbemenu" value="1" <?php echo checked(1, get_option('wpbemenu'), false); ?> />
-									<?php _e('Add shortcut for WPB Elements in sidebar menu','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="gzip" value="1" <?php echo checked(1, get_option('gzip'), false); ?> />
-									<?php _e('Enable GZIP compression','wpbe'); ?>
-                                </label>
-                            </li>
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="shortcode" value="1" <?php echo checked(1, get_option('shortcode'), false); ?> />
-									<?php _e('Enable Shortcode in widgets','wpbe'); ?>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="welcome-panel-column welcome-panel-last">
-                        <h4><?php _e('WP Admin Footer','wpbe'); ?></h4>
-                        <ul>
-                            <li>
-                                <label style="display:block;margin-bottom:5px;">
-                                    <?php _e('Text Left (HTML allowed)','wpbe'); ?>
-                                </label>
-                                <textarea type="text" name="footerleft" style="width:100%;height:100px;"><?php echo get_option('footerleft'); ?></textarea>
-                            </li>
-                            <li>
-                                <label style="display:block;margin-bottom:5px;">
-                                    <?php _e('Text Right (HTML allowed)','wpbe'); ?>
-                                </label>
-                                <textarea type="text" name="footerright" style="width:100%;height:100px;"><?php echo get_option('footerright'); ?></textarea>
-                            </li>
-                        </ul>
-                        <h4><?php _e('WP Mail','wpbe'); ?></h4>
-                        <ul>
-                            <li>
-                                <label style="display:block;margin-bottom:5px;">
-                                    <?php _e('Change mail name <strong>(WordPress)</strong> sent to users to your own','wpbe'); ?>
-                                </label>
-                                <input type="text" name="mailname" style="width:100%;" value="<?php echo get_option('mailname'); ?>" placeholder="<?php _e('Example:','wpbe');?> <?php echo get_bloginfo('name'); ?>" />
-                            </li>
-                            <li>
-                                <label style="display:block;margin-bottom:5px;">
-                                    <?php _e('Change mail adress <strong>(wordpress@mysite.com)</strong> sent to users to your own','wpbe'); ?>
-                                </label>
-                                <input type="text" name="mailadress" style="width:100%;" value="<?php echo get_option('mailadress'); ?>" placeholder="<?php _e('Example:','wpbe');?> <?php echo get_bloginfo('admin_email'); ?>" />
-                            </li>
-                        </ul>
+                        <h4><?php _e('Quick Info','wpbe'); ?></h4>
+                        <p><?php _e('When you change something do not forget to click on this blue Save Changes button below this text. If you need more information just click on the Read More Information button next to the Save Changes button.','wpbe'); ?></p>
                         <p class="submit">
                         	<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php _e('Save Changes','wpbe'); ?>">
                             <a href="http://www.wknet.se/wp-basic-elements/" class="button button-secondary" target="_blank"><?php _e('Information','wpbe'); ?></a>
                        	</p>
                     </div>
+                    <div class="welcome-panel-column">
+                    	<h4><?php _e('Quick Tip','wpbe'); ?></h4>
+                    	<p><?php _e('Follow me on Twitter to keep up with the latest updates and if you want you can donate to support open source. Just click on the buttons below to choose what you want to do.','wpbe'); ?></p>
+                        <p class="submit">
+                        	<a class="button button-secondary" href="https://twitter.com/damircalusic/" target="_blank">
+                           		<?php _e('FOLLOW ON TWITTER','wpbe'); ?>
+                        	</a>
+                        	<a class="button button-secondary" href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">
+                           		<?php _e('DONATE TO SUPPORT','wpbe'); ?>
+                        	</a>
+                     	</p>
+                     </div>
+                    <div class="welcome-panel-column welcome-panel-last"></div>
                 </div>
             </div>
         </div>
+        
+        <div id="dashboard-widgets-wrap">
+        	<div id="dashboard-widgets" class="metabox-holder">
+            	
+                <div id="postbox-container-1" class="postbox-container">
+                    <div id="normal-sortables" class="meta-box-sortables ui-sortable">
+                    
+                    	<div id="wpcore" class="postbox">
+                        	<div class="handlediv" data-src="wpcore" title="<?php _e('Toggle content','wpbe'); ?>"><br></div>
+                            <h3 class="hndle"><span><?php _e('WP Core','wpbe'); ?></span></h3>
+							<div class="inside">
+								<div class="main">
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpbemenu" value="1" <?php echo checked(1, get_option('wpbemenu'), false); ?> />
+                                                <?php _e('Add shortcut for WPB Elements in sidebar menu','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="gzip" value="1" <?php echo checked(1, get_option('gzip'), false); ?> />
+                                                <?php _e('Enable GZIP compression','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="shortcode" value="1" <?php echo checked(1, get_option('shortcode'), false); ?> />
+                                                <?php _e('Enable shortcode in widgets','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                 </div>
+                          	</div>
+						</div>
+                        
+                        <div id="wpoptimisation" class="postbox">
+                        	<div class="handlediv" data-src="wpoptimisation" title="<?php _e('Toggle content','wpbe'); ?>"><br></div>
+                            <h3 class="hndle"><span><?php _e('WP Optimisation','wpbe'); ?></span></h3>
+							<div class="inside">
+								<div class="main">
+                                	<p><?php _e('Disable features from the wp_head() function and make your code cleaner.','wpbe'); ?></p>
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wprss" value="1" <?php echo checked(1, get_option('wprss'), false); ?> />
+                                                <?php _e('Remove Post, Comment and Category feeds','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="rsd" value="1" <?php echo checked(1, get_option('rsd'), false); ?> />
+                                                <?php _e('Remove EditURI link','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wlw" value="1" <?php echo checked(1, get_option('wlw'), false); ?> />
+                                                <?php _e('Remove Windows Live Writer Manifest File','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="gen" value="1" <?php echo checked(1, get_option('gen'), false); ?> />
+                                                <?php _e('Remove WordPress Generator Meta Tag','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="irelink" value="1" <?php echo checked(1, get_option('irelink'), false); ?> />
+                                                <?php _e('Remove Index link','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="prevlink" value="1" <?php echo checked(1, get_option('prevlink'), false); ?> />
+                                                <?php _e('Remove Prev link','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="startlink" value="1" <?php echo checked(1, get_option('startlink'), false); ?> />
+                                                <?php _e('Remove Start link','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="adjlinks" value="1" <?php echo checked(1, get_option('adjlinks'), false); ?> />
+                                                <?php _e('Remove Relational links for the Posts','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="shortlink" value="1" <?php echo checked(1, get_option('shortlink'), false); ?> />
+                                                <?php _e('Remove WordPress Shortlink','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="pings" value="1" <?php echo checked(1, get_option('pings'), false); ?> />
+                                                <?php _e('Remove WordPress Pingbacks','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="canonical" value="1" <?php echo checked(1, get_option('canonical'), false); ?> />
+                                                <?php _e('Remove Canonical link','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    
+                                 </div>
+                          	</div>
+						</div>
+                
+                    </div>
+            	</div>
+                
+                <div id="postbox-container-2" class="postbox-container">
+                	<div id="side-sortables" class="meta-box-sortables ui-sortable">
+                    	
+                        <div id="generellt" class="postbox">
+                        	<div class="handlediv" data-src="generellt" title="<?php _e('Toggle content','wpbe'); ?>"><br></div>
+                            <h3 class="hndle"><span><?php _e('WP Admin Toolbar','wpbe'); ?></span></h3>
+							<div class="inside">
+								<div class="main">
+                                	<p><?php _e('Check the ones you would like to disable in the admin toolbar. You are not going to delete anything instead you will just make your toolbar cleaner and more friendly.','wpbe'); ?></p>
+                                    <p><?php _e('Just test and see what happens in the toolbar. If you want anything back just uncheck and it will appear again.','wpbe'); ?></p>
+                                    <ul>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wplogo" value="1" <?php echo checked(1, get_option('wplogo'), false); ?> />
+                                                <?php _e('Remove WP Logo','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpupdates" value="1" <?php echo checked(1, get_option('wpupdates'), false); ?> />
+                                                <?php _e('Remove WP Updates','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpcomments" value="1" <?php echo checked(1, get_option('wpcomments'), false); ?> />
+                                                <?php _e('Remove WP Comments','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpsearch" value="1" <?php echo checked(1, get_option('wpsearch'), false); ?> />
+                                                <?php _e('Remove WP Search','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    <p><strong><?php _e('Plugins (if used)','wpbe'); ?></strong></p>
+                                    <ul>    
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wp3tc" value="1" <?php echo checked(1, get_option('wp3tc'), false); ?> />
+                                                <?php _e('Remove W3 Total Cache','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="a1s" value="1" <?php echo checked(1, get_option('a1s'), false); ?> />
+                                                <?php _e('Remove All in One Seo','wpbe'); ?>
+                                            </label>
+                                        </li> 
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="yseo" value="1" <?php echo checked(1, get_option('yseo'), false); ?> />
+                                                <?php _e('Remove Yoast SEO','wpbe'); ?>
+                                            </label>
+                                        </li> 
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpzoom" value="1" <?php echo checked(1, get_option('wpzoom'), false); ?> />
+                                                <?php _e('Remove WP Zoom Framework','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="vfb" value="1" <?php echo checked(1, get_option('vfb'), false); ?> />
+                                                <?php _e('Remove Visual Form Builder','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="ngg" value="1" <?php echo checked(1, get_option('ngg'), false); ?> />
+                                                <?php _e('Remove NextGen Gallery link','wpbe'); ?>
+                                            </label>
+                                        </li> 
+                                    </ul>
+                                 </div>
+                          	</div>
+						</div>
+                        
+                        <div id="wpusers" class="postbox">
+                        	<div class="handlediv" data-src="wpusers" title="<?php _e('Toggle content','wpbe'); ?>"><br></div>
+                            <h3 class="hndle"><span><?php _e('WP Users','wpbe'); ?></span></h3>
+							<div class="inside">
+								<div class="main">
+                                	<p><?php _e('Disable unnecessary fields that you do not want to display to your users in admin backend.','wpbe'); ?></p>
+                                	<ul>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="colorsch" value="1" <?php echo checked(1, get_option('colorsch'), false); ?> />
+                                                <?php _e('Disable Color Scheme selector for users','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="haim" value="1" <?php echo checked(1, get_option('haim'), false); ?> />
+                                                <?php _e('Disable AIM field from users contact field','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="hjabber" value="1" <?php echo checked(1, get_option('hjabber'), false); ?> />
+                                                <?php _e('Disable Jabber field from users contact field','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="hyim" value="1" <?php echo checked(1, get_option('hyim'), false); ?> />
+                                                <?php _e('Disable Yahoo IM field from users contact field','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="hgplus" value="1" <?php echo checked(1, get_option('hgplus'), false); ?> />
+                                                <?php _e('Disable Google Plus field from users contact field','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    </ul>    
+                                </div>
+                          	</div>
+						</div>
+                        
+                    </div>
+               	</div>
+                
+                <div id="postbox-container-3" class="postbox-container">
+                	<div id="column3-sortables" class="meta-box-sortables ui-sortable">
+                    
+                    	<div id="wpadminfooter" class="postbox">
+                        	<div class="handlediv" data-src="wpadminfooter" title="<?php _e('Toggle content','wpbe'); ?>"><br></div>
+                            <h3 class="hndle"><span><?php _e('WP Admin Footer','wpbe'); ?></span></h3>
+							<div class="inside">
+								<div class="main">
+                                	<p><?php _e('Change the default footer text to what you want.','wpbe'); ?></p>
+                                	<ul>
+                                        <li>
+                                            <label style="display:block;margin-bottom:5px;">
+                                                <?php _e('Text Left (HTML allowed)','wpbe'); ?>
+                                            </label>
+                                            <textarea type="text" name="footerleft" style="width:100%;height:100px;"><?php echo get_option('footerleft'); ?></textarea>
+                                        </li>
+                                        <li>
+                                            <label style="display:block;margin-bottom:5px;">
+                                                <?php _e('Text Right (HTML allowed)','wpbe'); ?>
+                                            </label>
+                                            <textarea type="text" name="footerright" style="width:100%;height:100px;"><?php echo get_option('footerright'); ?></textarea>
+                                        </li>
+                                    </ul>
+                                </div>
+                          	</div>
+						 </div>
+                         
+                         <div id="wpmail" class="postbox">
+                        	<div class="handlediv" data-src="wpmail" title="<?php _e('Toggle content','wpbe'); ?>"><br></div>
+                            <h3 class="hndle"><span><?php _e('WP Mail','wpbe'); ?></span></h3>
+							<div class="inside">
+								<div class="main">
+                                	<ul>
+                                        <li>
+                                            <label style="display:block;margin-bottom:5px;">
+                                                <?php _e('Change mail name <strong>(WordPress)</strong> sent to users to your own','wpbe'); ?>
+                                            </label>
+                                            <input type="text" name="mailname" style="width:100%;" value="<?php echo get_option('mailname'); ?>" placeholder="<?php _e('Example:','wpbe');?> <?php echo get_bloginfo('name'); ?>" />
+                                        </li>
+                                        <li>
+                                            <label style="display:block;margin-bottom:5px;">
+                                                <?php _e('Change mail adress <strong>(wordpress@mysite.com)</strong> sent to users','wpbe'); ?>
+                                            </label>
+                                            <input type="text" name="mailadress" style="width:100%;" value="<?php echo get_option('mailadress'); ?>" placeholder="<?php _e('Example:','wpbe');?> <?php echo get_bloginfo('admin_email'); ?>" />
+                                        </li>
+                                    </ul>
+                                </div>
+                          	</div>
+						 </div>
+                        
+                    
+                    </div>
+               	</div>
+            
+            </div>
+        </div>
+        
     </form>
+    <script>
+		jQuery(document).ready(function( $ ) {
+			$('.handlediv').click(function() {
+				var div = $(this).attr("data-src");
+				if($("#" + div).hasClass("closed")){
+					$("#" + div).removeClass("closed");
+				}
+				else{
+					$("#" + div).addClass("closed");
+				}
+			});
+		});
+	</script>
 <?php 
 }  
 
@@ -375,6 +491,11 @@ function remove_wpzoom() {
 function remove_vfb() {
 	global $wp_admin_bar;
     $wp_admin_bar->remove_menu('vfb_admin_toolbar'); 
+}
+
+function remove_ngg() {
+	global $wp_admin_bar;
+    $wp_admin_bar->remove_menu('ngg-menu'); 
 }
 
 function remove_pings($headers) {
@@ -463,6 +584,7 @@ if(get_option('shortcode') == '1'){ add_filter('widget_text', 'do_shortcode'); }
 // Remove WP Logo in toolbar
 if(get_option('wplogo') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wplogo'); } 
 
+
 // Remove WP Updates in toolbar
 if(get_option('wpupdates') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpupdates'); } 
 
@@ -487,6 +609,9 @@ if(get_option('wpzoom') == '1'){ add_action('wp_before_admin_bar_render', 'remov
 // Remove Visual Form Builder in toolbar
 if(get_option('vfb') == '1'){ add_action('wp_before_admin_bar_render', 'remove_vfb'); }
 
+// Remove NextGen Gallery from  the toolbar
+if(get_option('ngg') == '1'){ add_action('wp_before_admin_bar_render', 'remove_ngg'); }
+
 // Remove Website URL from Users contact info
 if(get_option('colorsch') == '1'){ remove_action('admin_color_scheme_picker', 'admin_color_scheme_picker'); }
 
@@ -502,10 +627,10 @@ if(get_option('hyim') == '1'){ add_filter('user_contactmethods', 'hide_yim', 999
 // Remove Google Plus from Users contact info
 if(get_option('hgplus') == '1'){ add_filter('user_contactmethods', 'hide_gplus', 999, 1); }
 
-// Add custom text the admin footer left
+// Add custom text to the admin footer left
 if(get_option('footerleft') != ''){ add_filter('admin_footer_text', 'admin_footer_left'); } 
 
-// Add custom text the admin footer right
+// Add custom text to the admin footer right
 if(get_option('footerright') != ''){ add_filter('update_footer', 'admin_footer_right', '1234'); }
 
 // Change WordPress custom name to your own name
