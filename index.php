@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: -
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 3.0.1
+* Version: 3.0.2
 * Author: Damir Calusic
 * Author URI: http://www.damircalusic.com/
 * License: GPLv2
@@ -26,7 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '3.0.1');
+define('WBE_VERSION', '3.0.2');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -64,6 +64,13 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'shortlink');
 	register_setting('wpb-settings-group', 'pings');
 	register_setting('wpb-settings-group', 'canonical');
+	register_setting('wpb-settings-group', 'wpsol');
+	register_setting('wpb-settings-group', 'wpchl');
+	register_setting('wpb-settings-group', 'welcomewp');
+	register_setting('wpb-settings-group', 'wpdbactivity');
+	register_setting('wpb-settings-group', 'wpdbqpress');
+	register_setting('wpb-settings-group', 'wpdbaag');
+	register_setting('wpb-settings-group', 'wpdbrn');
 	register_setting('wpb-settings-group', 'wpbemenu');
 	register_setting('wpb-settings-group', 'shortcode');
 	register_setting('wpb-settings-group', 'wplogo');
@@ -146,7 +153,7 @@ function wpb_settings_page() {
                                         <li>
                                             <label>
                                                 <input type="checkbox" name="gzip" value="1" <?php echo checked(1, get_option('gzip'), false); ?> />
-                                                <?php _e('Enable GZIP compression','wpbe'); ?>
+                                                <?php _e('Enable GZIP compression (ob_start(\'ob_gzhandler\') used)','wpbe'); ?>
                                             </label>
                                         </li>
                                         <li>
@@ -231,6 +238,61 @@ function wpb_settings_page() {
                                             <label>
                                                 <input type="checkbox" name="canonical" value="1" <?php echo checked(1, get_option('canonical'), false); ?> />
                                                 <?php _e('Remove Canonical link','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                    
+                                 </div>
+                          	</div>
+						</div>
+                        
+                        <div id="wpdashboard" class="postbox">
+                        	<div class="handlediv" data-src="wpdashboard" title="<?php _e('Toggle content','wpbe'); ?>"><br></div>
+                            <h3 class="hndle"><span><?php _e('WP Dashboard','wpbe'); ?></span></h3>
+							<div class="inside">
+								<div class="main">
+                                	<p><?php _e('Disable features from the main WordPress Dashboard and make it a little bit cleaner.','wpbe'); ?></p>
+                                    <ul>
+                                    	<li>
+                                            <label>
+                                                <input type="checkbox" name="wpsol" value="1" <?php echo checked(1, get_option('wpsol'), false); ?> />
+                                                <?php _e('Remove Screen Options from top right corner','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    	<li>
+                                            <label>
+                                                <input type="checkbox" name="wpchl" value="1" <?php echo checked(1, get_option('wpchl'), false); ?> />
+                                                <?php _e('Remove Help link from top right corner','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    	<li>
+                                            <label>
+                                                <input type="checkbox" name="welcomewp" value="1" <?php echo checked(1, get_option('welcomewp'), false); ?> />
+                                                <?php _e('Remove Welcome to WordPress!','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                    	<li>
+                                            <label>
+                                                <input type="checkbox" name="wpdbaag" value="1" <?php echo checked(1, get_option('wpdbaag'), false); ?> />
+                                                <?php _e('Remove At a Glance','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpdbactivity" value="1" <?php echo checked(1, get_option('wpdbactivity'), false); ?> />
+                                                <?php _e('Remove Activity','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpdbqpress" value="1" <?php echo checked(1, get_option('wpdbqpress'), false); ?> />
+                                                <?php _e('Remove Quick Draft','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpdbrn" value="1" <?php echo checked(1, get_option('wpdbrn'), false); ?> />
+                                                <?php _e('Remove WordPress News','wpbe'); ?>
                                             </label>
                                         </li>
                                     </ul>
@@ -523,6 +585,45 @@ function hide_gplus($contactmethods) {
 	return $contactmethods;
 }
 
+function remove_screen_options(){
+	?>
+    <style type="text/css">
+		#screen-options-link-wrap #show-settings-link{display:none !important;}
+		#contextual-help-link-wrap, #screen-options-link-wrap{border:none !important;}
+	</style>
+    <?php
+}
+
+function remove_help_link(){
+	?>
+    <style type="text/css">
+		#contextual-help-link-wrap #contextual-help-link{display:none !important;}
+		#contextual-help-link-wrap, #screen-options-link-wrap{border:none !important;}
+	</style>
+    <?php
+}
+
+function remove_aag_dashboard(){
+	remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
+}
+
+function remove_activity_dashboard(){
+	remove_meta_box('dashboard_activity', 'dashboard', 'normal');
+}
+
+function remove_quick_press_dashboard(){
+	remove_meta_box('dashboard_quick_press', 'dashboard', 'side');
+	/*remove_meta_box('dashboard_incoming_links', 'dashboard', 'normal');
+	remove_meta_box('dashboard_plugins', 'dashboard', 'normal');
+	remove_meta_box('yoast_db_widget', 'dashboard', 'normal');
+	remove_meta_box('dashboard_recent_drafts', 'dashboard', 'side');
+	remove_meta_box('dashboard_secondary', 'dashboard', 'side');*/ 
+}
+
+function remove_wpnews_dashboard(){
+	remove_meta_box('dashboard_primary', 'dashboard', 'side');
+}
+
 function admin_footer_left() { 
      echo get_option('footerleft'); 
 }
@@ -575,6 +676,27 @@ if(get_option('pings') == '1'){ add_filter('wp_headers', 'remove_pings'); }
 // Remove Canonical link
 if(get_option('canonical') == '1'){ remove_action('wp_head', 'rel_canonical'); }
 
+// Remove Screen Options link from dashboard
+if(get_option('wpsol') == '1'){ add_action('admin_head', 'remove_screen_options'); }
+
+// Remove Help link from dashboard
+if(get_option('wpchl') == '1'){ add_action('admin_head', 'remove_help_link'); }
+
+// Remove Welcome to WordPress from dashboard
+if(get_option('welcomewp') == '1'){ remove_action('welcome_panel', 'wp_welcome_panel'); }
+
+// Remove At a Glance from dashboard
+if(get_option('wpdbaag') == '1'){ add_action('wp_dashboard_setup', 'remove_aag_dashboard'); }
+
+// Remove Activity from dashboard
+if(get_option('wpdbactivity') == '1'){ add_action('wp_dashboard_setup', 'remove_activity_dashboard'); }
+
+// Remove Quick Press from dashboard
+if(get_option('wpdbqpress') == '1'){ add_action('wp_dashboard_setup', 'remove_quick_press_dashboard'); }
+
+// Remove WordPress News from dashboard
+if(get_option('wpdbrn') == '1'){ add_action('wp_dashboard_setup', 'remove_wpnews_dashboard'); }
+
 // Add WPB Elements in main admin menu
 if(get_option('wpbemenu') == '1'){ add_action('admin_menu', 'wpb_shortcut'); }
 
@@ -583,7 +705,6 @@ if(get_option('shortcode') == '1'){ add_filter('widget_text', 'do_shortcode'); }
 
 // Remove WP Logo in toolbar
 if(get_option('wplogo') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wplogo'); } 
-
 
 // Remove WP Updates in toolbar
 if(get_option('wpupdates') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpupdates'); } 

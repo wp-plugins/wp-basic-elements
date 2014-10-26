@@ -4,7 +4,7 @@ Tags: optimisation, elements, basic, gzip, compress, admin, wp admin, admin foot
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 3.0.1
+Stable tag: 3.0.2
 License: GPLv2
 
 WP Basic Elements is a WordPress plugin that simplifys your WP Admin and cleans your markup in the code for faster loadtime.
@@ -32,6 +32,10 @@ Use the `support` link in the menu above of this plugins homepage on wordpress.o
 1. Coming soon
 
 == Changelog ==
+= 3.0.2 =
+* Added new section WP Dashboard
+* Update of POT file for translations
+
 = 3.0.1 =
 * Compatibility fix
 
