@@ -1,0 +1,268 @@
+# Copyright (C) 2014 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-basic-elements\n"
+"POT-Creation-Date: 2014-09-03 11:50:59+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: index.php:97
+msgid "Version"
+msgstr ""
+
+#: index.php:100
+msgid "WP Basic Elements"
+msgstr ""
+
+#: index.php:101
+msgid ""
+"With WP Basic Elements you can disable unnecessary features and speed up "
+"your site. Make the WP Admin simple and clean. You can activate gzip "
+"compression, change admin footers in backend, activate shortcodes in "
+"widgets, remove admin toolbar options and you can clean the code markup from "
+"unnecessary code snippets like WordPress generator meta tag and a bunch of "
+"other non important code snippets in the code. Cleaning the code markup will "
+"speed up your sites loadtime and increase the overall performance."
+msgstr ""
+
+#: index.php:104
+msgid "Quick Info"
+msgstr ""
+
+#: index.php:105
+msgid ""
+"When you change something do not forget to click on this blue Save Changes "
+"button below this text. If you need more information just click on the Read "
+"More Information button next to the Save Changes button."
+msgstr ""
+
+#: index.php:107
+msgid "Save Changes"
+msgstr ""
+
+#: index.php:108
+msgid "Information"
+msgstr ""
+
+#: index.php:112
+msgid "Quick Tip"
+msgstr ""
+
+#: index.php:113
+msgid ""
+"Follow me on Twitter to keep up with the latest updates and if you want you "
+"can donate to support open source. Just click on the buttons below to choose "
+"what you want to do."
+msgstr ""
+
+#: index.php:116
+msgid "FOLLOW ON TWITTER"
+msgstr ""
+
+#: index.php:119
+msgid "DONATE TO SUPPORT"
+msgstr ""
+
+#: index.php:135 index.php:164 index.php:249 index.php:325 index.php:373
+#: index.php:397
+msgid "Toggle content"
+msgstr ""
+
+#: index.php:136
+msgid "WP Core"
+msgstr ""
+
+#: index.php:143
+msgid "Add shortcut for WPB Elements in sidebar menu"
+msgstr ""
+
+#: index.php:149
+msgid "Enable GZIP compression"
+msgstr ""
+
+#: index.php:155
+msgid "Enable shortcode in widgets"
+msgstr ""
+
+#: index.php:165
+msgid "WP Optimisation"
+msgstr ""
+
+#: index.php:168
+msgid ""
+"Disable features from the wp_head() function and make your code cleaner."
+msgstr ""
+
+#: index.php:173
+msgid "Remove Post, Comment and Category feeds"
+msgstr ""
+
+#: index.php:179
+msgid "Remove EditURI link"
+msgstr ""
+
+#: index.php:185
+msgid "Remove Windows Live Writer Manifest File"
+msgstr ""
+
+#: index.php:191
+msgid "Remove WordPress Generator Meta Tag"
+msgstr ""
+
+#: index.php:197
+msgid "Remove Index link"
+msgstr ""
+
+#: index.php:203
+msgid "Remove Prev link"
+msgstr ""
+
+#: index.php:209
+msgid "Remove Start link"
+msgstr ""
+
+#: index.php:215
+msgid "Remove Relational links for the Posts"
+msgstr ""
+
+#: index.php:221
+msgid "Remove WordPress Shortlink"
+msgstr ""
+
+#: index.php:227
+msgid "Remove WordPress Pingbacks"
+msgstr ""
+
+#: index.php:233
+msgid "Remove Canonical link"
+msgstr ""
+
+#: index.php:250
+msgid "WP Admin Toolbar"
+msgstr ""
+
+#: index.php:253
+msgid ""
+"Check the ones you would like to disable in the admin toolbar. You are not "
+"going to delete anything instead you will just make your toolbar cleaner and "
+"more friendly."
+msgstr ""
+
+#: index.php:254
+msgid ""
+"Just test and see what happens in the toolbar. If you want anything back "
+"just uncheck and it will appear again."
+msgstr ""
+
+#: index.php:259
+msgid "Remove WP Logo"
+msgstr ""
+
+#: index.php:265
+msgid "Remove WP Updates"
+msgstr ""
+
+#: index.php:271
+msgid "Remove WP Comments"
+msgstr ""
+
+#: index.php:277
+msgid "Remove WP Search"
+msgstr ""
+
+#: index.php:281
+msgid "Plugins (if used)"
+msgstr ""
+
+#: index.php:286
+msgid "Remove W3 Total Cache"
+msgstr ""
+
+#: index.php:292
+msgid "Remove All in One Seo"
+msgstr ""
+
+#: index.php:298
+msgid "Remove Yoast SEO"
+msgstr ""
+
+#: index.php:304
+msgid "Remove WP Zoom Framework"
+msgstr ""
+
+#: index.php:310
+msgid "Remove Visual Form Builder"
+msgstr ""
+
+#: index.php:316
+msgid "Remove NextGen Gallery link"
+msgstr ""
+
+#: index.php:326
+msgid "WP Users"
+msgstr ""
+
+#: index.php:329
+msgid ""
+"Disable unnecessary fields that you do not want to display to your users in "
+"admin backend."
+msgstr ""
+
+#: index.php:334
+msgid "Disable Color Scheme selector for users"
+msgstr ""
+
+#: index.php:340
+msgid "Disable AIM field from users contact field"
+msgstr ""
+
+#: index.php:346
+msgid "Disable Jabber field from users contact field"
+msgstr ""
+
+#: index.php:352
+msgid "Disable Yahoo IM field from users contact field"
+msgstr ""
+
+#: index.php:358
+msgid "Disable Google Plus field from users contact field"
+msgstr ""
+
+#: index.php:374
+msgid "WP Admin Footer"
+msgstr ""
+
+#: index.php:377
+msgid "Change the default footer text to what you want."
+msgstr ""
+
+#: index.php:381
+msgid "Text Left (HTML allowed)"
+msgstr ""
+
+#: index.php:387
+msgid "Text Right (HTML allowed)"
+msgstr ""
+
+#: index.php:398
+msgid "WP Mail"
+msgstr ""
+
+#: index.php:404
+msgid "Change mail name <strong>(WordPress)</strong> sent to users to your own"
+msgstr ""
+
+#: index.php:406 index.php:412
+msgid "Example:"
+msgstr ""
+
+#: index.php:410
+msgid ""
+"Change mail adress <strong>(wordpress@mysite.com)</strong> sent to users"
+msgstr ""
