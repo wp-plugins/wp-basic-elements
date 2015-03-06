@@ -3,9 +3,9 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: -
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 3.0.2
+* Version: 3.0.3
 * Author: Damir Calusic
-* Author URI: http://www.damircalusic.com/
+* Author URI: https://www.damircalusic.com/
 * License: GPLv2
 * License URI: http://www.gnu.org/licenses/gpl-2.0.html
 */ 
@@ -26,29 +26,15 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '3.0.2');
+define('WBE_VERSION', '3.0.3');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 add_action('admin_menu', 'wpb_elements');
-add_action('admin_head', 'wpb_admin_head' );
 
 function wpb_elements() {
 	add_action('admin_init', 'register_wpb_settings');
 	add_submenu_page('options-general.php', 'WPB Elements', 'WPB Elements', 'manage_options', 'wpb_settings_page', 'wpb_settings_page');
-}
-
-function wpb_admin_head() {
-	?>
-    <style type="text/css">
-		.plugins tr#wp-basic-elements .column-description{
-			background-image:url(<?php echo plugin_dir_url( __FILE__ ) . 'images/favicon-96x96.png'; ?>);
-			background-repeat:no-repeat;
-			background-position:95% 0;
-			background-size:65px;
-		}
-    </style>
-    <?php
 }
 
 function register_wpb_settings() {
@@ -71,6 +57,7 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'wpdbqpress');
 	register_setting('wpb-settings-group', 'wpdbaag');
 	register_setting('wpb-settings-group', 'wpdbrn');
+	register_setting('wpb-settings-group', 'wpdbbprn');
 	register_setting('wpb-settings-group', 'wpbemenu');
 	register_setting('wpb-settings-group', 'shortcode');
 	register_setting('wpb-settings-group', 'wplogo');
@@ -293,6 +280,12 @@ function wpb_settings_page() {
                                             <label>
                                                 <input type="checkbox" name="wpdbrn" value="1" <?php echo checked(1, get_option('wpdbrn'), false); ?> />
                                                 <?php _e('Remove WordPress News','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpdbbprn" value="1" <?php echo checked(1, get_option('wpdbbprn'), false); ?> />
+                                                <?php _e('Remove bbPress Right Now','wpbe'); ?>
                                             </label>
                                         </li>
                                     </ul>
@@ -624,6 +617,10 @@ function remove_wpnews_dashboard(){
 	remove_meta_box('dashboard_primary', 'dashboard', 'side');
 }
 
+function remove_wpbprn_dashboard(){
+	remove_meta_box('bbp-dashboard-right-now', 'dashboard', 'side');
+}
+
 function admin_footer_left() { 
      echo get_option('footerleft'); 
 }
@@ -696,6 +693,9 @@ if(get_option('wpdbqpress') == '1'){ add_action('wp_dashboard_setup', 'remove_qu
 
 // Remove WordPress News from dashboard
 if(get_option('wpdbrn') == '1'){ add_action('wp_dashboard_setup', 'remove_wpnews_dashboard'); }
+
+// Remove bbPress Right Now from dashboard
+if(get_option('wpdbbprn') == '1'){ add_action('wp_dashboard_setup', 'remove_wpbprn_dashboard'); }
 
 // Add WPB Elements in main admin menu
 if(get_option('wpbemenu') == '1'){ add_action('admin_menu', 'wpb_shortcut'); }
