@@ -1,26 +1,28 @@
-# Copyright (C) 2014 
-# This file is distributed under the same license as the  package.
+# Copyright (C) 2015 WP Basic Elements
+# This file is distributed under the same license as the WP Basic Elements package.
 msgid ""
 msgstr ""
-"Project-Id-Version:  \n"
-"Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-basic-elements\n"
-"POT-Creation-Date: 2014-10-26 16:14:29+00:00\n"
+"Project-Id-Version: WP Basic Elements 3.0.3\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/support/plugin/wp-basic-elements\n"
+"POT-Creation-Date: 2015-03-06 11:47:41+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2014-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: index.php:104
+#: index.php:91
 msgid "Version"
 msgstr ""
 
-#: index.php:107
+#. #-#-#-#-#  plugin.pot (WP Basic Elements 3.0.3)  #-#-#-#-#
+#. Plugin Name of the plugin/theme
+#: index.php:94
 msgid "WP Basic Elements"
 msgstr ""
 
-#: index.php:108
+#: index.php:95
 msgid ""
 "With WP Basic Elements you can disable unnecessary features and speed up "
 "your site. Make the WP Admin simple and clean. You can activate gzip "
@@ -31,276 +33,302 @@ msgid ""
 "speed up your sites loadtime and increase the overall performance."
 msgstr ""
 
-#: index.php:111
+#: index.php:98
 msgid "Quick Info"
 msgstr ""
 
-#: index.php:112
+#: index.php:99
 msgid ""
 "When you change something do not forget to click on this blue Save Changes "
 "button below this text. If you need more information just click on the Read "
 "More Information button next to the Save Changes button."
 msgstr ""
 
-#: index.php:114
+#: index.php:101
 msgid "Save Changes"
 msgstr ""
 
-#: index.php:115
+#: index.php:102
 msgid "Information"
 msgstr ""
 
-#: index.php:119
+#: index.php:106
 msgid "Quick Tip"
 msgstr ""
 
-#: index.php:120
+#: index.php:107
 msgid ""
 "Follow me on Twitter to keep up with the latest updates and if you want you "
 "can donate to support open source. Just click on the buttons below to choose "
 "what you want to do."
 msgstr ""
 
-#: index.php:123
+#: index.php:110
 msgid "FOLLOW ON TWITTER"
 msgstr ""
 
-#: index.php:126
+#: index.php:113
 msgid "DONATE TO SUPPORT"
 msgstr ""
 
-#: index.php:142 index.php:171 index.php:250 index.php:311 index.php:387
-#: index.php:435 index.php:459
+#: index.php:129 index.php:158 index.php:237 index.php:304 index.php:380
+#: index.php:428 index.php:452
 msgid "Toggle content"
 msgstr ""
 
-#: index.php:143
+#: index.php:130
 msgid "WP Core"
 msgstr ""
 
-#: index.php:150
+#: index.php:137
 msgid "Add shortcut for WPB Elements in sidebar menu"
 msgstr ""
 
-#: index.php:156
+#: index.php:143
 msgid "Enable GZIP compression (ob_start('ob_gzhandler') used)"
 msgstr ""
 
-#: index.php:162
+#: index.php:149
 msgid "Enable shortcode in widgets"
 msgstr ""
 
-#: index.php:172
+#: index.php:159
 msgid "WP Optimisation"
 msgstr ""
 
-#: index.php:175
+#: index.php:162
 msgid ""
 "Disable features from the wp_head() function and make your code cleaner."
 msgstr ""
 
-#: index.php:180
+#: index.php:167
 msgid "Remove Post, Comment and Category feeds"
 msgstr ""
 
-#: index.php:186
+#: index.php:173
 msgid "Remove EditURI link"
 msgstr ""
 
-#: index.php:192
+#: index.php:179
 msgid "Remove Windows Live Writer Manifest File"
 msgstr ""
 
-#: index.php:198
+#: index.php:185
 msgid "Remove WordPress Generator Meta Tag"
 msgstr ""
 
-#: index.php:204
+#: index.php:191
 msgid "Remove Index link"
 msgstr ""
 
-#: index.php:210
+#: index.php:197
 msgid "Remove Prev link"
 msgstr ""
 
-#: index.php:216
+#: index.php:203
 msgid "Remove Start link"
 msgstr ""
 
-#: index.php:222
+#: index.php:209
 msgid "Remove Relational links for the Posts"
 msgstr ""
 
-#: index.php:228
+#: index.php:215
 msgid "Remove WordPress Shortlink"
 msgstr ""
 
-#: index.php:234
+#: index.php:221
 msgid "Remove WordPress Pingbacks"
 msgstr ""
 
-#: index.php:240
+#: index.php:227
 msgid "Remove Canonical link"
 msgstr ""
 
-#: index.php:251
+#: index.php:238
 msgid "WP Dashboard"
 msgstr ""
 
-#: index.php:254
+#: index.php:241
 msgid ""
 "Disable features from the main WordPress Dashboard and make it a little bit "
 "cleaner."
 msgstr ""
 
-#: index.php:259
+#: index.php:246
 msgid "Remove Screen Options from top right corner"
 msgstr ""
 
-#: index.php:265
+#: index.php:252
 msgid "Remove Help link from top right corner"
 msgstr ""
 
-#: index.php:271
+#: index.php:258
 msgid "Remove Welcome to WordPress!"
 msgstr ""
 
-#: index.php:277
+#: index.php:264
 msgid "Remove At a Glance"
 msgstr ""
 
-#: index.php:283
+#: index.php:270
 msgid "Remove Activity"
 msgstr ""
 
-#: index.php:289
+#: index.php:276
 msgid "Remove Quick Draft"
 msgstr ""
 
-#: index.php:295
+#: index.php:282
 msgid "Remove WordPress News"
 msgstr ""
 
-#: index.php:312
+#: index.php:288
+msgid "Remove bbPress Right Now"
+msgstr ""
+
+#: index.php:305
 msgid "WP Admin Toolbar"
 msgstr ""
 
-#: index.php:315
+#: index.php:308
 msgid ""
 "Check the ones you would like to disable in the admin toolbar. You are not "
 "going to delete anything instead you will just make your toolbar cleaner and "
 "more friendly."
 msgstr ""
 
-#: index.php:316
+#: index.php:309
 msgid ""
 "Just test and see what happens in the toolbar. If you want anything back "
 "just uncheck and it will appear again."
 msgstr ""
 
-#: index.php:321
+#: index.php:314
 msgid "Remove WP Logo"
 msgstr ""
 
-#: index.php:327
+#: index.php:320
 msgid "Remove WP Updates"
 msgstr ""
 
-#: index.php:333
+#: index.php:326
 msgid "Remove WP Comments"
 msgstr ""
 
-#: index.php:339
+#: index.php:332
 msgid "Remove WP Search"
 msgstr ""
 
-#: index.php:343
+#: index.php:336
 msgid "Plugins (if used)"
 msgstr ""
 
-#: index.php:348
+#: index.php:341
 msgid "Remove W3 Total Cache"
 msgstr ""
 
-#: index.php:354
+#: index.php:347
 msgid "Remove All in One Seo"
 msgstr ""
 
-#: index.php:360
+#: index.php:353
 msgid "Remove Yoast SEO"
 msgstr ""
 
-#: index.php:366
+#: index.php:359
 msgid "Remove WP Zoom Framework"
 msgstr ""
 
-#: index.php:372
+#: index.php:365
 msgid "Remove Visual Form Builder"
 msgstr ""
 
-#: index.php:378
+#: index.php:371
 msgid "Remove NextGen Gallery link"
 msgstr ""
 
-#: index.php:388
+#: index.php:381
 msgid "WP Users"
 msgstr ""
 
-#: index.php:391
+#: index.php:384
 msgid ""
 "Disable unnecessary fields that you do not want to display to your users in "
 "admin backend."
 msgstr ""
 
-#: index.php:396
+#: index.php:389
 msgid "Disable Color Scheme selector for users"
 msgstr ""
 
-#: index.php:402
+#: index.php:395
 msgid "Disable AIM field from users contact field"
 msgstr ""
 
-#: index.php:408
+#: index.php:401
 msgid "Disable Jabber field from users contact field"
 msgstr ""
 
-#: index.php:414
+#: index.php:407
 msgid "Disable Yahoo IM field from users contact field"
 msgstr ""
 
-#: index.php:420
+#: index.php:413
 msgid "Disable Google Plus field from users contact field"
 msgstr ""
 
-#: index.php:436
+#: index.php:429
 msgid "WP Admin Footer"
 msgstr ""
 
-#: index.php:439
+#: index.php:432
 msgid "Change the default footer text to what you want."
 msgstr ""
 
-#: index.php:443
+#: index.php:436
 msgid "Text Left (HTML allowed)"
 msgstr ""
 
-#: index.php:449
+#: index.php:442
 msgid "Text Right (HTML allowed)"
 msgstr ""
 
-#: index.php:460
+#: index.php:453
 msgid "WP Mail"
 msgstr ""
 
-#: index.php:466
+#: index.php:459
 msgid "Change mail name <strong>(WordPress)</strong> sent to users to your own"
 msgstr ""
 
-#: index.php:468 index.php:474
+#: index.php:461 index.php:467
 msgid "Example:"
 msgstr ""
 
-#: index.php:472
+#: index.php:465
 msgid ""
 "Change mail adress <strong>(wordpress@mysite.com)</strong> sent to users"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "-"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Disable unnecessary features and speed up your site. Make the WP Admin "
+"simple and clean. <a href=\"https://www.paypal.com/cgi-bin/webscr?"
+"cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic"
+"%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP"
+"%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted\" target=\"_blank\">Donate</"
+"a>"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Damir Calusic"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "https://www.damircalusic.com/"
 msgstr ""
