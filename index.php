@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: -
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 3.0.3
+* Version: 3.0.4
 * Author: Damir Calusic
 * Author URI: https://www.damircalusic.com/
 * License: GPLv2
@@ -26,7 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '3.0.3');
+define('WBE_VERSION', '3.0.4');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
@@ -38,6 +38,7 @@ function wpb_elements() {
 }
 
 function register_wpb_settings() {
+	register_setting('wpb-settings-group', 'turnoffupdates');
 	register_setting('wpb-settings-group', 'gzip');
 	register_setting('wpb-settings-group', 'wprss');
 	register_setting('wpb-settings-group', 'rsd');
@@ -59,8 +60,11 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'wpdbrn');
 	register_setting('wpb-settings-group', 'wpdbbprn');
 	register_setting('wpb-settings-group', 'wpbemenu');
-	register_setting('wpb-settings-group', 'shortcode');
+	register_setting('wpb-settings-group', 'widgetshortcode');
+	register_setting('wpb-settings-group', 'excerptshortcode');
 	register_setting('wpb-settings-group', 'wplogo');
+	register_setting('wpb-settings-group', 'wpnewcontent');
+	register_setting('wpb-settings-group', 'sitename');
 	register_setting('wpb-settings-group', 'wpupdates');
 	register_setting('wpb-settings-group', 'wpsearch');
 	register_setting('wpb-settings-group', 'wpcomments');
@@ -143,10 +147,22 @@ function wpb_settings_page() {
                                                 <?php _e('Enable GZIP compression (ob_start(\'ob_gzhandler\') used)','wpbe'); ?>
                                             </label>
                                         </li>
+                                         <li>
+                                            <label>
+                                                <input type="checkbox" name="turnoffupdates" value="1" <?php echo checked(1, get_option('turnoffupdates'), false); ?> />
+                                                <?php _e('Disable Plugins, WordPress and Themes update notifications for non-admins.','wpbe'); ?>
+                                            </label>
+                                        </li>
                                         <li>
                                             <label>
-                                                <input type="checkbox" name="shortcode" value="1" <?php echo checked(1, get_option('shortcode'), false); ?> />
+                                                <input type="checkbox" name="widgetshortcode" value="1" <?php echo checked(1, get_option('widgetshortcode'), false); ?> />
                                                 <?php _e('Enable shortcode in widgets','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                         <li>
+                                            <label>
+                                                <input type="checkbox" name="excerptshortcode" value="1" <?php echo checked(1, get_option('excerptshortcode'), false); ?> />
+                                                <?php _e('Enable shortcode in manual excerpts','wpbe'); ?>
                                             </label>
                                         </li>
                                     </ul>
@@ -182,7 +198,7 @@ function wpb_settings_page() {
                                         <li>
                                             <label>
                                                 <input type="checkbox" name="gen" value="1" <?php echo checked(1, get_option('gen'), false); ?> />
-                                                <?php _e('Remove WordPress Generator Meta Tag','wpbe'); ?>
+                                                <?php _e('Remove WordPress &amp; WooCommerce Generator Meta Tag','wpbe'); ?>
                                             </label>
                                         </li>
                                         <li>
@@ -312,6 +328,18 @@ function wpb_settings_page() {
                                             <label>
                                                 <input type="checkbox" name="wplogo" value="1" <?php echo checked(1, get_option('wplogo'), false); ?> />
                                                 <?php _e('Remove WP Logo','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="wpnewcontent" value="1" <?php echo checked(1, get_option('wpnewcontent'), false); ?> />
+                                                <?php _e('Remove New Content','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="sitename" value="1" <?php echo checked(1, get_option('sitename'), false); ?> />
+                                                <?php _e('Remove Sitename','wpbe'); ?>
                                             </label>
                                         </li>
                                         <li>
@@ -499,6 +527,19 @@ function gzip(){
     ob_start('ob_gzhandler');
 }
 
+function turnoffupdates(){
+	if(!current_user_can('manage_options')){
+		function remove_core_updates(){
+			global $wp_version;
+			return (object)array('last_checked'=> time(), 'version_checked'=> $wp_version);
+		}
+	
+		add_filter('pre_site_transient_update_core','remove_core_updates');
+		add_filter('pre_site_transient_update_plugins','remove_core_updates');
+		add_filter('pre_site_transient_update_themes','remove_core_updates');
+	}
+}
+
 function wpb_shortcut(){ 
 	add_menu_page('WPB Elements', 'WPB Elements', 'manage_options', __FILE__, 'wpb_settings_page', 'dashicons-awards', 3);
 }
@@ -506,6 +547,16 @@ function wpb_shortcut(){
 function remove_wplogo() {   
     global $wp_admin_bar;
 	$wp_admin_bar->remove_menu('wp-logo'); 
+}
+
+function remove_wpnewcontent() {   
+    global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('new-content'); 
+}
+
+function remove_sitename() {   
+    global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('site-name');  
 }
 
 function remove_wpupdates() {
@@ -637,6 +688,9 @@ function new_mail_from_name($old) {
 	return get_option('mailname');
 }
 
+// Disable Plugins, WordPress and Themes update notifications for non-admins
+if(get_option('turnoffupdates') == '1'){ add_action('plugins_loaded', 'turnoffupdates'); } 
+
 // Initiate GZIP on WordPress site
 if(get_option('gzip') == '1'){ add_action('init', 'gzip'); } 
 
@@ -700,11 +754,20 @@ if(get_option('wpdbbprn') == '1'){ add_action('wp_dashboard_setup', 'remove_wpbp
 // Add WPB Elements in main admin menu
 if(get_option('wpbemenu') == '1'){ add_action('admin_menu', 'wpb_shortcut'); }
 
-// Add Shortcode ability to widgets
-if(get_option('shortcode') == '1'){ add_filter('widget_text', 'do_shortcode'); } 
+// Add shortcode ability to widgets
+if(get_option('widgetshortcode') == '1'){ add_filter('widget_text', 'do_widgetshortcode'); } 
+
+// Add shortcode ability to manual excerpts
+if(get_option('excerptshortcode') == '1'){ add_filter('the_excerpt', 'do_shortcode'); } 
 
 // Remove WP Logo in toolbar
 if(get_option('wplogo') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wplogo'); } 
+
+// Remove WP New Content in toolbar
+if(get_option('wpnewcontent') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpnewcontent'); } 
+
+// Remove Site Name in toolbar
+if(get_option('sitename') == '1'){ add_action('wp_before_admin_bar_render', 'remove_sitename'); } 
 
 // Remove WP Updates in toolbar
 if(get_option('wpupdates') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpupdates'); } 

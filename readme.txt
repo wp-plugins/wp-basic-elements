@@ -2,9 +2,9 @@
 Contributors: WebKreativ
 Tags: optimisation, elements, basic, gzip, compress, admin, wp admin, admin footer, meta tags, seo, simple
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted
-Requires at least: 3.0
-Tested up to: 4.1.1
-Stable tag: 3.0.3
+Requires at least: 3.5
+Tested up to: 4.3
+Stable tag: 3.0.4
 License: GPLv2
 
 WP Basic Elements is a WordPress plugin that simplifys your WP Admin and cleans your markup in the code for faster loadtime.
@@ -32,8 +32,15 @@ Use the `support` link in the menu above of this plugins homepage on wordpress.o
 1. Coming soon
 
 == Changelog ==
+= 3.0.4 =
+* Small renaming of labels 
+* Added option in WP Core section to add shortcode capability for manual excerpts
+* Added option in WP Core section remove Plugin, WordPress and Themes update notifications for non-admins 
+* Added option in WP Admin Toolbar section to remove Sitename
+* Added option in WP Admin Toolbar section to remove WP New Content
+
 = 3.0.3 =
-* Added option in WP Dasboard section do remove bbPress Right Now meta-box
+* Added option in WP Dasboard section do remove BuddyPress Right Now meta-box
 * Removed plugin image at plugins section
 
 = 3.0.2 =
