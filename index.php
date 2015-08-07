@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: -
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 3.0.4
+* Version: 3.0.5
 * Author: Damir Calusic
 * Author URI: https://www.damircalusic.com/
 * License: GPLv2
@@ -26,9 +26,9 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '3.0.4');
+define('WBE_VERSION', '3.0.5');
 
-load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages' );
+load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages');
 
 add_action('admin_menu', 'wpb_elements');
 
@@ -40,6 +40,7 @@ function wpb_elements() {
 function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'turnoffupdates');
 	register_setting('wpb-settings-group', 'gzip');
+	register_setting('wpb-settings-group', 'disableemojis');
 	register_setting('wpb-settings-group', 'wprss');
 	register_setting('wpb-settings-group', 'rsd');
 	register_setting('wpb-settings-group', 'wlw');
@@ -58,6 +59,7 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'wpdbqpress');
 	register_setting('wpb-settings-group', 'wpdbaag');
 	register_setting('wpb-settings-group', 'wpdbrn');
+	register_setting('wpb-settings-group', 'yseopo');
 	register_setting('wpb-settings-group', 'wpdbbprn');
 	register_setting('wpb-settings-group', 'wpbemenu');
 	register_setting('wpb-settings-group', 'widgetshortcode');
@@ -87,7 +89,7 @@ function register_wpb_settings() {
 
 function wpb_settings_page() {
 ?>
-    <form method="post" action="options.php" style="width:98%;">
+    <form method="post" action="options.php" style="width:98%;color:rgba(128,128,128,1) !important;">
         <?php settings_fields('wpb-settings-group'); ?>
         <?php do_settings_sections('baw-settings-group'); ?>
         <div id="welcome-panel" class="welcome-panel">
@@ -147,10 +149,16 @@ function wpb_settings_page() {
                                                 <?php _e('Enable GZIP compression (ob_start(\'ob_gzhandler\') used)','wpbe'); ?>
                                             </label>
                                         </li>
-                                         <li>
+                                        <li>
                                             <label>
                                                 <input type="checkbox" name="turnoffupdates" value="1" <?php echo checked(1, get_option('turnoffupdates'), false); ?> />
                                                 <?php _e('Disable Plugins, WordPress and Themes update notifications for non-admins.','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="disableemojis" value="1" <?php echo checked(1, get_option('disableemojis'), false); ?> />
+                                                <?php _e('Disable Emoji icons if not in use.','wpbe'); ?>
                                             </label>
                                         </li>
                                         <li>
@@ -296,6 +304,12 @@ function wpb_settings_page() {
                                             <label>
                                                 <input type="checkbox" name="wpdbrn" value="1" <?php echo checked(1, get_option('wpdbrn'), false); ?> />
                                                 <?php _e('Remove WordPress News','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="yseopo" value="1" <?php echo checked(1, get_option('yseopo'), false); ?> />
+                                                <?php _e('Remove Yoast SEO Posts Overview','wpbe'); ?>
                                             </label>
                                         </li>
                                         <li>
@@ -647,6 +661,16 @@ function remove_help_link(){
     <?php
 }
 
+function disable_emojis() {
+	remove_action('wp_head', 'print_emoji_detection_script', 7);
+	remove_action('admin_print_scripts', 'print_emoji_detection_script');
+	remove_action('wp_print_styles', 'print_emoji_styles');
+	remove_action('admin_print_styles', 'print_emoji_styles');	
+	remove_filter('the_content_feed', 'wp_staticize_emoji');
+	remove_filter('comment_text_rss', 'wp_staticize_emoji');	
+	remove_filter('wp_mail', 'wp_staticize_emoji_for_email');
+}
+
 function remove_aag_dashboard(){
 	remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
 }
@@ -666,6 +690,10 @@ function remove_quick_press_dashboard(){
 
 function remove_wpnews_dashboard(){
 	remove_meta_box('dashboard_primary', 'dashboard', 'side');
+}
+
+function remove_yseopo_dashboard(){
+	remove_meta_box('wpseo-dashboard-overview', 'dashboard', 'normal');
 }
 
 function remove_wpbprn_dashboard(){
@@ -693,6 +721,9 @@ if(get_option('turnoffupdates') == '1'){ add_action('plugins_loaded', 'turnoffup
 
 // Initiate GZIP on WordPress site
 if(get_option('gzip') == '1'){ add_action('init', 'gzip'); } 
+
+// Disable Emoji icons if not in use
+if(get_option('disableemojis') == '1'){ add_action('init', 'disable_emojis'); } 
 
 // Remove Category, Post and Comment feeds
 if(get_option('wprss') == '1'){ remove_action('wp_head', 'feed_links_extra', 3); remove_action('wp_head', 'feed_links', 2); }
@@ -747,6 +778,9 @@ if(get_option('wpdbqpress') == '1'){ add_action('wp_dashboard_setup', 'remove_qu
 
 // Remove WordPress News from dashboard
 if(get_option('wpdbrn') == '1'){ add_action('wp_dashboard_setup', 'remove_wpnews_dashboard'); }
+
+// Remove Yoast SEO Posts Overview
+if(get_option('yseopo') == '1'){ add_action('wp_dashboard_setup', 'remove_yseopo_dashboard'); }
 
 // Remove bbPress Right Now from dashboard
 if(get_option('wpdbbprn') == '1'){ add_action('wp_dashboard_setup', 'remove_wpbprn_dashboard'); }
