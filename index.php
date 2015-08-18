@@ -3,7 +3,7 @@
 * Plugin Name: WP Basic Elements
 * Plugin URI: -
 * Description: Disable unnecessary features and speed up your site. Make the WP Admin simple and clean. <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=DYLYJ242GX64J&lc=SE&item_name=WP%20Basic%20Elements&item_number=Support%20Open%20Source&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donate_SM%2egif%3aNonHosted" target="_blank">Donate</a>
-* Version: 3.0.5
+* Version: 3.0.6
 * Author: Damir Calusic
 * Author URI: https://www.damircalusic.com/
 * License: GPLv2
@@ -26,7 +26,7 @@
 	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-define('WBE_VERSION', '3.0.5');
+define('WBE_VERSION', '3.0.6');
 
 load_plugin_textdomain('wpbe', false, basename( dirname( __FILE__ ) ) . '/languages');
 
@@ -67,6 +67,8 @@ function register_wpb_settings() {
 	register_setting('wpb-settings-group', 'wplogo');
 	register_setting('wpb-settings-group', 'wpnewcontent');
 	register_setting('wpb-settings-group', 'sitename');
+	register_setting('wpb-settings-group', 'customize');
+	register_setting('wpb-settings-group', 'edit');
 	register_setting('wpb-settings-group', 'wpupdates');
 	register_setting('wpb-settings-group', 'wpsearch');
 	register_setting('wpb-settings-group', 'wpcomments');
@@ -347,13 +349,25 @@ function wpb_settings_page() {
                                         <li>
                                             <label>
                                                 <input type="checkbox" name="wpnewcontent" value="1" <?php echo checked(1, get_option('wpnewcontent'), false); ?> />
-                                                <?php _e('Remove New Content','wpbe'); ?>
+                                                <?php _e('Remove WP New Content','wpbe'); ?>
                                             </label>
                                         </li>
                                         <li>
                                             <label>
                                                 <input type="checkbox" name="sitename" value="1" <?php echo checked(1, get_option('sitename'), false); ?> />
-                                                <?php _e('Remove Sitename','wpbe'); ?>
+                                                <?php _e('Remove WP Sitename','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="customize" value="1" <?php echo checked(1, get_option('customize'), false); ?> />
+                                                <?php _e('Remove WP Customize','wpbe'); ?>
+                                            </label>
+                                        </li>
+                                        <li>
+                                            <label>
+                                                <input type="checkbox" name="edit" value="1" <?php echo checked(1, get_option('edit'), false); ?> />
+                                                <?php _e('Remove WP Edit','wpbe'); ?>
                                             </label>
                                         </li>
                                         <li>
@@ -571,6 +585,16 @@ function remove_wpnewcontent() {
 function remove_sitename() {   
     global $wp_admin_bar;
 	$wp_admin_bar->remove_menu('site-name');  
+}
+
+function remove_customize() {   
+    global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('customize');  
+}
+
+function remove_edit() {   
+    global $wp_admin_bar;
+	$wp_admin_bar->remove_menu('edit');  
 }
 
 function remove_wpupdates() {
@@ -802,6 +826,12 @@ if(get_option('wpnewcontent') == '1'){ add_action('wp_before_admin_bar_render', 
 
 // Remove Site Name in toolbar
 if(get_option('sitename') == '1'){ add_action('wp_before_admin_bar_render', 'remove_sitename'); } 
+
+// Remove WP Customize in toolbar
+if(get_option('customize') == '1'){ add_action('wp_before_admin_bar_render', 'remove_customize'); } 
+
+// Remove WP Edit in toolbar
+if(get_option('edit') == '1'){ add_action('wp_before_admin_bar_render', 'remove_edit'); } 
 
 // Remove WP Updates in toolbar
 if(get_option('wpupdates') == '1'){ add_action('wp_before_admin_bar_render', 'remove_wpupdates'); } 
